@@ -433,3 +433,16 @@ body {
 .weather-forecast .icon.thunderstorms {
     background-image: url("images/thunderstorm.png");
 }
+
+.spinner-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: 200px;
+}
+.modal-container {
+    position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+    position: absolute;
+}

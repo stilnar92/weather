@@ -1,25 +1,18 @@
 import fetch from 'isomorphic-fetch'
 
-export const REQUEST_WEATHER = 'REQUEST_WEATHER'
-const requestWeather = (city) => {
+export const WEATHER_BEGIN = 'WEATHER_BEGIN';
+const requestWeather = () => {
     return {
-        type: REQUEST_WEATHER,
-        payload: {
-            data: {},
-
-        }
-        city,
-        loading: true
+        type: WEATHER_BEGIN,
     }
 }
 
-export const RECEIVE_WEATHER = 'RECEIVE_WEATHER'
-function receiveWeather(city, json) {
+export const WEATHER_END = 'WEATHER_END';
+
+function receiveWeather(json) {
     return {
-        type: RECEIVE_WEATHER,
-        city,
-        weather: json,
-        loading: false
+        type: WEATHER_END,
+        payload: json
     }
 }
 
@@ -27,12 +20,31 @@ export function fetchWeather(city) {
 
     return function (dispatch) {
 
-        dispatch(requestWeather(city));
+        dispatch(requestWeather());
 
-        return fetch(`http://localhost:3002/weather`)
+        return fetch(`http://localhost:3004/weather`)
             .then(response => response.json())
             .then(json =>
-                dispatch(receiveWeather(city, json))
+                dispatch(receiveWeather(json))
+            )
+    }
+}
+
+export const WEATHERS_CREATE_ITEM = 'WEATHERS_CREATE_ITEM';
+
+export function addWeatherCity(city) {
+
+    return function (dispatch) {
+
+        const p = new Promise((resolve) => resolve(dispatch(fetchWeather(city))));
+
+        return p
+            .then(weather =>
+                dispatch({
+                        type: WEATHERS_CREATE_ITEM,
+                        payload: weather.payload
+                    }
+                )
             )
     }
 }

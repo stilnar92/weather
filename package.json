@@ -4,8 +4,13 @@
   "private": true,
   "dependencies": {
     "react": "^16.1.0",
+    "react-bootstrap": "^0.31.5",
     "react-dom": "^16.1.0",
+    "react-loading-spinner": "^1.0.12",
+    "react-place": "^0.6.2",
+    "react-places-autocomplete": "^5.4.3",
     "react-scripts": "1.0.17",
+    "react-spinkit": "^3.0.0",
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
@@ -15,6 +20,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "redux-devtools-extension": "^2.13.2"
   }
 }

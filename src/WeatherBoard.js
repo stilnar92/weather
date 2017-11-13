@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-
+import {fetchWeather} from './actions'
 import './App.css';
-export class WeatherBoard extends Component {
+
+export default class WeatherBoard extends Component {
+
+
     render() {
+        const {item} = this.props;
         return (
             <main className="main">
                 <div className="card cardTemplate weather-forecast">
-                    <div className="location">New York</div>
+                    <div className="location">{item && item.name}</div>
                     <div className="date">Sun, 12 Nov 2017 11:00 AM EST</div>
-                    <div className="description">Cloudy</div>
+                    <div className="description">{item && item.weather[0].main}</div>
                     <div className="current">
                         <div className="visual">
                             <div className="icon snow"></div>
@@ -33,11 +37,19 @@ export class WeatherBoard extends Component {
         )
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        weather: state.weather
-    }
-}
-
-export default connect(mapStateToProps)(WeatherBoard);
+//
+// const mapStateToProps = (state) => {
+//     return {
+//         weather: state.weather.data
+//     }
+// }
+//
+// const mapDispatchToProps = (dispatch, ownProps) => {
+//     return {
+//         loadWeather: (city) => {
+//             dispatch(fetchWeather(city))
+//         }
+//     }
+// }
+//
+// export default connect(mapStateToProps, mapDispatchToProps)(WeatherBoard);

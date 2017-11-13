@@ -8,7 +8,9 @@ import {createStore, applyMiddleware} from 'redux'
 import rootReducer from './reducers'
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
-
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 let store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(thunk)
     )

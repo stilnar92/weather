@@ -1,12 +1,24 @@
+import {WEATHER_BEGIN, WEATHER_END} from "../actions/index";
 
-export const weather = (state, action) => {
+export const weather = (state = {}, action) => {
     switch (action.type) {
-        case 'RECEIVE_WEATHER':
+        case 'WEATHER_BEGIN':
             return {
-                type: RECEIVE_WEATHER,
-                city: action.payload.city,
-                weather: json,
-                loading: false
+                data: action.payload,
+                status: 'RUNNING',
+                error: null
+            }
+        case 'WEATHER_END':
+            return {
+                data: action.payload,
+                status: 'SUCCESS',
+                error: null
+            }
+        case 'WEATHER_FAILURE':
+            return {
+                data: null,
+                status: 'FAIL',
+                error: action.payload,
             }
         default:
             return state
