@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Header} from './Header';
 import WeatherList from './WeatherList';
 import './App.css';
-import {fetchWeather, addWeatherCity} from './actions'
+import {addWeatherCity} from './actions'
 import 'react-loading-spinner/src/css/index.css';
 import {AddCityModalForm} from './AddCityModalForm';
 
@@ -17,7 +17,6 @@ class WeatherPage extends Component {
     }
 
     componentDidMount() {
-        this.props.addWeatherCity('Ufa');
     }
 
     handleRefreshWeather = () => {
@@ -36,7 +35,7 @@ class WeatherPage extends Component {
         const {showModal} = this.state;
         const {weathers} = this.props;
         return (
-            <div className="App">
+            <div>
                 <Header
                     refreshWeather={this.handleRefreshWeather}
                     addCity={this.handleShowAddCityModal}
@@ -55,18 +54,14 @@ class WeatherPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        status: state.weather.status,
         weathers: state.weathers.list
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        loadWeather: (city) => {
-            dispatch(fetchWeather(city))
-        },
-        addWeatherCity: (city) => {
-            return new Promise((resolve) => resolve(dispatch(addWeatherCity(city))))
+        addWeatherCity: (location) => {
+            return new Promise((resolve) => resolve(dispatch(addWeatherCity(location))))
         }
     }
 }
