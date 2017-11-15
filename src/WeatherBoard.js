@@ -8,10 +8,21 @@ export default class WeatherBoard extends Component {
         const {
             item,
             item: {
+                weather: [
+                    {
+                        main,
+                        description
+                    }
+                ],
+                name,
                 dt: currentDate,
                 sys: {
                     sunrise,
                     sunset
+                },
+                main: {
+                    temp,
+                    humidity
                 }
 
             }
@@ -19,18 +30,18 @@ export default class WeatherBoard extends Component {
         return (
             <main className="main">
                 <div className="card cardTemplate weather-forecast">
-                    <div className="location">{item.name}</div>
+                    <div className="location">{name}</div>
                     <div className="date">{timeStampConvertTime(currentDate)}</div>
-                    <div className="description">{item.weather[0].main}</div>
+                    <div className="description">{description}</div>
                     <div className="current">
                         <div className="visual">
                             <div className="icon snow"></div>
                             <div className="temperature">
-                                <span className="value">{item.main.temp}</span><span className="scale">°C</span>
+                                <span className="value">{temp}</span><span className="scale">°C</span>
                             </div>
                         </div>
                         <div className="description">
-                            <div className="humidity">37%</div>
+                            <div className="humidity">{`${humidity}%`}</div>
                             <div className="wind">
                                 <span className="value">7</span>
                                 <span className="scale">mph</span>

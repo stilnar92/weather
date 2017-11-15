@@ -11,12 +11,12 @@ export class PlaceLocationModal extends Component {
     }
 
     render() {
-        const {value, handleContinue, handleShowAddCityModal} = this.props;
+        const {value, onContinue, onClose, onCloseModal} = this.props;
         return (
             <div className="static-modal">
                 <Modal
                     show={this.props.showModal}
-                    onHide={this.props.onClose}
+                    onHide={this.props.onCloseModal}
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Ваш регион</Modal.Title>
@@ -28,13 +28,13 @@ export class PlaceLocationModal extends Component {
                             </FormGroup>
                             <Button
                                 bsStyle="primary"
-                                onClick={handleContinue}
+                                onClick={onContinue}
                             >
                                 Да
                             </Button>
                             <Button
                                 bsStyle="primary"
-                                onClick={handleShowAddCityModal}
+                                onClick={onClose}
                             >
                                 Нет, указать другой
                             </Button>

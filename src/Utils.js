@@ -2,26 +2,27 @@
 export const getAddressFromCoords = (lat, lng) => {
     const geocoder = new google.maps.Geocoder();;
     let latlng = new google.maps.LatLng(lat, lng);
-    geocoder.geocode({'latLng': latlng}, (results, status) =>{
+
+    return new Promise ((resolve, reject) => geocoder.geocode({'latLng': latlng}, (results, status) =>{
         if (status === google.maps.GeocoderStatus.OK) {
-            let city = null;
+            let area =null;
             if (results[1]) {
                 for (let i = 0; i < results[0].address_components.length; i++) {
                     for (let b = 0; b < results[0].address_components[i].types.length; b++) {
                         if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
-                            city = results[0].address_components[i];
+                            area = results[0].address_components[i];
                             break;
                         }
                     }
                 }
-                return city;
+            resolve(area);
             } else {
                 alert("No results found");
             }
         } else {
             alert("Geocoder failed due to: " + status);
         }
-    });
+    }));
 }
 
 export const timeStampConvertTime = (timeStamp) => {

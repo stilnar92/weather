@@ -28,3 +28,11 @@ export function addWeatherCity(location) {
             )
     }
 }
+
+export const WEATHER_LOCATION_SAVE = 'WEATHER_LOCATION_SAVE';
+export function locationSave(location) {
+    return {
+        type: WEATHER_LOCATION_SAVE,
+        payload: location
+    }
+}

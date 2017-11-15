@@ -1,10 +1,11 @@
-/*global google*/
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 import './App.css';
 import {PlaceLocationModal} from './PlaceLocationModal'
 import {getAddressFromCoords} from './Utils'
+import {addWeatherCity, locationSave} from './actions'
 
-export class Location extends Component {
+class Location extends Component {
 
     constructor(props) {
         super(props);
@@ -16,45 +17,87 @@ export class Location extends Component {
     }
 
     componentDidMount() {
-        let geolocation = navigator.geolocation;
+        navigator.geolocation.getCurrentPosition((position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            getAddressFromCoords(latitude, longitude).then((area) => {
+                this.props.locationSave({
+                    area: area.short_name,
+                    latitude,
+                    longitude
 
-        const location = new Promise((resolve, reject) => {
-            if (!geolocation) {
-                reject(new Error('Not Supported'));
-            }
-            geolocation.getCurrentPosition((position) => {
-                return new Promise((resolve, reject) => resolve(getAddressFromCoords(position.coords.latitude, position.coords.longitude))).then((loc)=> {
-                    alert(loc)
-                    return loc;
+                }).then(() => {
+                    this.setState({showModal: true})
                 })
-            }, () => {
-                reject(new Error('Permission denied'));
-            });
-        });
-        location.then((city) => {
-            this.setState({
-                showModal: true,
-                location: city
             })
-
-        })
+        }, () => {
+            return new Error('Permission denied');
+        });
     }
+
     handleCloseAddCityModal = () => {
+
+    }
+
+    handleContinue = () => {
+        const {
+            location: {
+                latitude,
+                longitude
+            }
+        } = this.props;
+        this.setState({
+                isLocation: true,
+                showModal: false
+            },
+            () => {
+                this.props.addWeatherCity({latitude, longitude})
+            }
+        )
+
+
+    }
+    handleCloseModal = () => {
 
     }
 
     render() {
 
-        const {isLocation, showModal, location} = this.state;
+        const {isLocation, showModal} = this.state;
+        const {location} = this.props;
         return (
             <div>
-                {isLocation && this.props.children}
-                <PlaceLocationModal
-                    showModal={showModal}
-                    value={location}
-                    onClose={this.handleCloseAddCityModal}
-                />
+                {this.props.children}
+                {/*<PlaceLocationModal*/}
+                    {/*showModal={showModal}*/}
+                    {/*value={location.area}*/}
+                    {/*onClose={this.handleCloseAddCityModal}*/}
+                    {/*onContinue={this.handleContinue}*/}
+                    {/*onCloseModal={this.handleCloseModal}*/}
+                {/*/>*/}
             </div>
         )
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        location: state.location.data
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        addWeatherCity: (location) => {
+            return new Promise((resolve) => resolve(dispatch(addWeatherCity(location))))
+        },
+        locationSave: (location) => {
+            return new Promise((resolve) => resolve(dispatch(locationSave(location))))
+        }
+    }
+}
+
+export default  connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Location)

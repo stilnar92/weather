@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import {weathers} from './weathers'
+import {location} from './location'
 
 const rootReducer = combineReducers({
-    weathers
+    weathers,
+    location
 })
 
 export default rootReducer
