@@ -40,12 +40,11 @@ class WeatherPage extends Component {
                     refreshWeather={this.handleRefreshWeather}
                     addCity={this.handleShowAddCityModal}
                 />
-                <WeatherList weathers={weathers}/>
+                {<WeatherList weathers={weathers}/>}
                 <AddCityModalForm
                     showModal={showModal}
                     onClose={this.handleCloseAddCityModal}
                     addWeatherCity={this.props.addWeatherCity}
-                    addCityWeather={this.props.addCityWeather}
                 />
             </div>
         );

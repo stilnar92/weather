@@ -1,3 +1,4 @@
+import {throttle} from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -11,10 +12,21 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-let store = createStore(rootReducer, composeWithDevTools(
-    applyMiddleware(thunk)
+import  {saveState, loadState} from './Utils';
+
+const initialStore = loadState();
+
+let store = createStore(
+    rootReducer,
+    initialStore,
+    composeWithDevTools(
+        applyMiddleware(thunk)
     )
 );
+
+store.subscribe(throttle(() => {
+    saveState(store.getState())
+}, 1000));
 
 ReactDOM.render(
     <Provider store={store}>

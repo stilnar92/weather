@@ -304,8 +304,8 @@ body {
 }
 
 .weather-forecast .current .icon {
-    width: 128px;
-    height: 128px;
+    width: 64px;
+    height: 64px;
 }
 
 .weather-forecast .current .visual {
@@ -384,27 +384,28 @@ body {
 
 .weather-forecast .icon {
     background-repeat: no-repeat;
-    background-size: contain;
 }
 
-.weather-forecast .icon.clear-day {
-    background-image: url("images/clear.png");
+.weather-forecast .icon.clear-sky-day {
+    background-image: url("images/icons/01d.png");
 }
 
-.weather-forecast .icon.clear-night {
-    background-image: url("images/clear.png");
+.weather-forecast .icon.clear-sky-night {
+    background-image: url("images/icons/01d.png");
 }
 
-.weather-forecast .icon.rain {
-    background-image: url("images/rain.png");
+.weather-forecast .icon.shower-rain {
+    background-image: url("images/icons/09d.png");
+}
+.weather-forecast .icon.rain-day {
+    background-image: url("images/icons/10d.png");
+}
+.weather-forecast .icon.rain-night {
+    background-image: url("images/icons/10n.png");
 }
 
 .weather-forecast .icon.snow {
-    background-image: url("images/snow.png");
-}
-
-.weather-forecast .icon.sleet {
-    background-image: url("images/sleet.png");
+    background-image: url("images/icons/13d.png");
 }
 
 .weather-forecast .icon.windy {
@@ -415,20 +416,28 @@ body {
     background-image: url("images/fog.png");
 }
 
-.weather-forecast .icon.cloudy {
-    background-image: url("images/cloudy.png");
+.weather-forecast .icon.few-cloudy-day {
+    background-image: url("images/icons/02d.png");
 }
 
-.weather-forecast .icon.partly-cloudy-day {
-    background-image: url("images/partly-cloudy.png");
+.weather-forecast .icon.few-cloudy-night {
+    background-image: url("images/icons/02n.png");
 }
 
-.weather-forecast .icon.partly-cloudy-night {
-    background-image: url("images/partly-cloudy.png");
+.weather-forecast .icon.scattered-cloudy {
+    background-image: url("images/icons/03d.png");
 }
 
-.weather-forecast .icon.thunderstorms {
-    background-image: url("images/thunderstorm.png");
+.weather-forecast .icon.broken-cloudy {
+    background-image: url("images/icons/04d.png");
+}
+
+.weather-forecast .icon.thunderstorm {
+    background-image: url("images/icons/11d.png");
+}
+
+.weather-forecast .icon.mist {
+    background-image: url("images/icons/50d.png");
 }
 
 .spinner-wrapper {

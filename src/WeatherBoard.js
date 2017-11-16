@@ -1,56 +1,27 @@
 import React, {Component} from 'react';
-import {timeStampConvertTime} from  './Utils';
+import {timeStampConvertTime, getIconClass} from  './Utils';
 import './App.css';
+import {Icon} from  './Icon';
+import {WeatherFuture} from  './WeatherFuture';
+import WeatherCurrent from "./WeatherCurrent";
+
+const TODAY = 4;
 
 export default class WeatherBoard extends Component {
 
     render() {
         const {
-            item,
             item: {
-                weather: [
-                    {
-                        main,
-                        description
-                    }
-                ],
-                name,
-                dt: currentDate,
-                sys: {
-                    sunrise,
-                    sunset
-                },
-                main: {
-                    temp,
-                    humidity
-                }
-
+                list: forecasts,
+                city
             }
         } = this.props;
+        const currentWeather = forecasts[TODAY];
         return (
             <main className="main">
                 <div className="card cardTemplate weather-forecast">
-                    <div className="location">{name}</div>
-                    <div className="date">{timeStampConvertTime(currentDate)}</div>
-                    <div className="description">{description}</div>
-                    <div className="current">
-                        <div className="visual">
-                            <div className="icon snow"></div>
-                            <div className="temperature">
-                                <span className="value">{temp}</span><span className="scale">°C</span>
-                            </div>
-                        </div>
-                        <div className="description">
-                            <div className="humidity">{`${humidity}%`}</div>
-                            <div className="wind">
-                                <span className="value">7</span>
-                                <span className="scale">mph</span>
-                                <span className="direction">225°</span>°
-                            </div>
-                            <div className="sunrise">{timeStampConvertTime(sunrise)}</div>
-                            <div className="sunset">{timeStampConvertTime(sunset)}</div>
-                        </div>
-                    </div>
+                    <WeatherCurrent forecast={currentWeather} area={city.name}/>
+                    <WeatherFuture forecasts={forecasts}/>
                 </div>
             </main>
         )
