@@ -1,9 +1,9 @@
 /*global google*/
 import React, {Component} from 'react';
-import {Modal, Button, FormGroup, HelpBlock, FormControl, ControlLabel} from 'react-bootstrap';
+import {Modal, Button, FormGroup} from 'react-bootstrap';
 import './App.css';
-import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
-import {getAddressFromCoords} from "./Utils";
+import PlacesAutocomplete from 'react-places-autocomplete'
+import {getLatLngFromAddress} from "./Utils";
 
 export class AddCityModalForm extends Component {
 
@@ -14,25 +14,18 @@ export class AddCityModalForm extends Component {
         }
     }
 
-    handleChangeCity = (address) => {
-        this.setState({address})
-    }
+    handleChangeCity = (address) => {this.setState({address})}
 
-    handleAddCity = () => {
-        geocodeByAddress(this.state.address)
-            .then(results => {
-                return getLatLng(results[0])
-            })
-            .then(latLng => {
-                this.props.addWeatherCity(
-                    {
-                        latitude: latLng.lat,
-                        longitude: latLng.lng
-                    }).then(() => {
-                        this.props.onClose();
-                })
-            })
-            .catch(error => console.error('Error', error))
+    handleAddArea = () => {
+        const {addWeather} = this.props;
+        getLatLngFromAddress(this.state.address)
+            .then((latLng) => addWeather({
+                latitude: latLng.lat,
+                longitude: latLng.lng
+            }))
+            .then(() => {
+                this.props.onClose();
+            }).catch(error => console.error('Error', error))
     }
 
     render() {
@@ -56,7 +49,7 @@ export class AddCityModalForm extends Component {
                             </FormGroup>
                             <Button
                                 bsStyle="primary"
-                                onClick={this.handleAddCity}
+                                onClick={this.handleAddArea}
                             >
                                 Добавить
                             </Button>

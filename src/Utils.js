@@ -1,5 +1,6 @@
 /*global google*/
 import fetch from 'isomorphic-fetch'
+import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
 export const getAddressFromCoords = (lat, lng) => {
     const geocoder = new google.maps.Geocoder();
@@ -163,6 +164,12 @@ export function dispatchAsync(actionType, asyncCall, payload = {}) {
 }
 
 export function dispatchAsyncBound(dispatch, actionType, asyncCall, payload = {}) {
-    return dispatch(dispatchAsync( actionType, asyncCall, payload))
+    return dispatch(dispatchAsync(actionType, asyncCall, payload))
 
+}
+
+export const getLatLngFromAddress = (address) => {
+    return geocodeByAddress(address).then(results => {
+        return getLatLng(results[0])
+    })
 }

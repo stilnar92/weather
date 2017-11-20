@@ -9,19 +9,25 @@ const TODAY = 4;
 
 export default class WeatherBoard extends Component {
 
+    handleDeleteWeather = () => {
+        const {item: {city}} = this.props;
+        this.props.deleteWeather(city)
+    }
+
     render() {
         const {
             item: {
                 list: forecasts,
                 city
-            }
+            },
         } = this.props;
         const currentWeather = forecasts[TODAY];
         return (
             <main className="main">
                 <div className="card cardTemplate weather-forecast">
                     <WeatherCurrent forecast={currentWeather} area={city.name}/>
-                    {/*<WeatherFuture forecasts={forecasts}/>*/}
+                    <WeatherFuture forecasts={forecasts}/>
+                    <button id="butRefresh" className="headerButton" onClick={this.handleDeleteWeather} aria-label="Refresh">d</button>
                 </div>
             </main>
         )

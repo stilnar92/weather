@@ -14,7 +14,7 @@ function receiveWeather(json) {
     }
 }
 
-export function addWeatherCity(location) {
+export function addWeather(location) {
 
     const p = new WeatherPageService().getWeathers(location);
     return function (dispatch) {

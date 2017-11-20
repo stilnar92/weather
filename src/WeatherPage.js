@@ -3,10 +3,11 @@ import {connect} from 'react-redux'
 import {Header} from './Header';
 import WeatherList from './WeatherList';
 import './App.css';
-import {addWeatherCity} from './actions'
 import 'react-loading-spinner/src/css/index.css';
-import {WeatherPageActions} from  './actions/WeatherPageActions';
-import {WeatherPageService} from  './Service';
+import {WeatherPageActions} from './actions/WeatherPageActions';
+import {WeatherPageService} from './Service';
+import {AddCityModalForm} from './AddCityModalForm';
+
 class WeatherPage extends Component {
 
     constructor(props) {
@@ -17,7 +18,6 @@ class WeatherPage extends Component {
     }
 
     componentDidMount() {
-        this.props.actions.addWeatherCity({latitude: '', longitude: ''})
     }
 
     handleRefreshWeather = () => {
@@ -32,6 +32,15 @@ class WeatherPage extends Component {
         this.setState({showModal: false})
     }
 
+    handleAddWeather = (location) => {
+      return this.props.actions.addWeather(location);
+    }
+
+    handleDeleteWeather = (location) => {
+        return this.props.actions.deleteWeather(location);
+    }
+
+
     render() {
         const {showModal} = this.state;
         const {weathers} = this.props;
@@ -41,12 +50,12 @@ class WeatherPage extends Component {
                     refreshWeather={this.handleRefreshWeather}
                     addCity={this.handleShowAddCityModal}
                 />
-                {<WeatherList weathers={weathers}/>}
-                {/*<AddCityModalForm*/}
-                    {/*showModal={showModal}*/}
-                    {/*onClose={this.handleCloseAddCityModal}*/}
-                    {/*addWeatherCity={this.props.addWeatherCity}*/}
-                {/*/>*/}
+                {<WeatherList weathers={weathers} deleteWeather={this.handleDeleteWeather}/>}
+                <AddCityModalForm
+                    showModal={showModal}
+                    onClose={this.handleCloseAddCityModal}
+                    addWeather={this.handleAddWeather}
+                />
             </div>
         );
     }

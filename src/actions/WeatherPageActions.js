@@ -6,12 +6,21 @@ export class WeatherPageActions {
         this.dispatch = dispatch;
     }
 
-    addWeatherCity(location){
-        const getWathers = () => this.api.getWeathers(location);
+    addWeather(area){
+        const getWathers = () => this.api.getWeathers(area);
         return dispatchAsyncBound(
             this.dispatch,
-            'WEATHERS',
+            'ADD_WEATHER',
             getWathers
+        )
+    }
+
+    deleteWeather(area){
+        this.dispatch(
+            {
+                type: 'DELETE_WEATHER',
+                payload: area
+            }
         )
     }
 }

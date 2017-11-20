@@ -6,21 +6,27 @@ const initialState = {
 
 export const weathers = (state = initialState, action) => {
     switch (action.type) {
-        case 'WEATHERS_BEGIN':
+        case 'ADD_WEATHER_BEGIN':
             return {
                 list:  state.list,
                 status: 'RUNNING',
                 error: null
             }
-        case 'WEATHERS_SUCCESS':
+        case 'ADD_WEATHER_SUCCESS':
             return {
                 list: [...state.list, action.payload],
                 status: 'SUCCESS',
                 error: null
             }
-        case 'WEATHERS_FAILURE':
+        case 'ADD_WEATHER_FAILURE':
             return {
                 list: null,
+                status: 'FAIL',
+                error: action.payload,
+            }
+        case 'DELETE_WEATHER':
+            return {
+                list: state.list.filter((item) => item.city !== action.payload),
                 status: 'FAIL',
                 error: action.payload,
             }

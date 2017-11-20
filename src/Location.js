@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import './App.css';
 import {PlaceLocationModal} from './PlaceLocationModal'
 import {getAddressFromCoords} from './Utils'
-import {addWeatherCity, locationSave} from './actions'
+import {addWeather, locationSave} from './actions'
 
 class Location extends Component {
 
@@ -51,7 +51,7 @@ class Location extends Component {
                 showModal: false
             },
             () => {
-                this.props.addWeatherCity({latitude, longitude})
+                this.props.addWeather({latitude, longitude})
             }
         )
 
@@ -88,8 +88,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        addWeatherCity: (location) => {
-            return new Promise((resolve) => resolve(dispatch(addWeatherCity(location))))
+        addWeather: (location) => {
+            return new Promise((resolve) => resolve(dispatch(addWeather(location))))
         },
         locationSave: (location) => {
             return new Promise((resolve) => resolve(dispatch(locationSave(location))))
