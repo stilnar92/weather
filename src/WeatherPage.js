@@ -5,8 +5,8 @@ import WeatherList from './WeatherList';
 import './App.css';
 import {addWeatherCity} from './actions'
 import 'react-loading-spinner/src/css/index.css';
-import {AddCityModalForm} from './AddCityModalForm';
-
+import {WeatherPageActions} from  './actions/WeatherPageActions';
+import {WeatherPageService} from  './Service';
 class WeatherPage extends Component {
 
     constructor(props) {
@@ -17,6 +17,7 @@ class WeatherPage extends Component {
     }
 
     componentDidMount() {
+        this.props.actions.addWeatherCity({latitude: '', longitude: ''})
     }
 
     handleRefreshWeather = () => {
@@ -41,11 +42,11 @@ class WeatherPage extends Component {
                     addCity={this.handleShowAddCityModal}
                 />
                 {<WeatherList weathers={weathers}/>}
-                <AddCityModalForm
-                    showModal={showModal}
-                    onClose={this.handleCloseAddCityModal}
-                    addWeatherCity={this.props.addWeatherCity}
-                />
+                {/*<AddCityModalForm*/}
+                    {/*showModal={showModal}*/}
+                    {/*onClose={this.handleCloseAddCityModal}*/}
+                    {/*addWeatherCity={this.props.addWeatherCity}*/}
+                {/*/>*/}
             </div>
         );
     }
@@ -59,9 +60,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        addWeatherCity: (location) => {
-            return new Promise((resolve) => resolve(dispatch(addWeatherCity(location))))
-        }
+        actions: new WeatherPageActions(new WeatherPageService(), dispatch)
     }
 }
 

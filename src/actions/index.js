@@ -1,6 +1,4 @@
-import fetch from 'isomorphic-fetch'
-import {OPEN_WEATHER_API_KEY} from '../Constants'
-
+import {WeatherPageService} from  '../Service'
 export const WEATHER_BEGIN = 'WEATHER_BEGIN';
 const requestWeather = () => {
     return {
@@ -18,14 +16,10 @@ function receiveWeather(json) {
 
 export function addWeatherCity(location) {
 
+    const p = new WeatherPageService().getWeathers(location);
     return function (dispatch) {
-
         dispatch(requestWeather());
-        return fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${location.latitude}&lon=${location.longitude}&appid=${OPEN_WEATHER_API_KEY}&units=metric`)
-            .then(response => response.json())
-            .then(json =>
-                dispatch(receiveWeather(json))
-            )
+        return p.then((json => dispatch(receiveWeather(json))))
     }
 }
 
@@ -36,3 +30,4 @@ export function locationSave(location) {
         payload: location
     }
 }
+

@@ -1,4 +1,6 @@
 /*global google*/
+import fetch from 'isomorphic-fetch'
+
 export const getAddressFromCoords = (lat, lng) => {
     const geocoder = new google.maps.Geocoder();
     let latlng = new google.maps.LatLng(lat, lng);
@@ -104,8 +106,63 @@ export const getIconClass = (code) => {
 }
 
 export const getFiveDaysForecast = (forecasts) => {
-    const  days = [0, 9, 17, 25, 31];
-    return forecasts.filter((item, index)=> {
-           return index in days
+    const days = [0, 9, 17, 25, 31];
+    return forecasts.filter((item, index) => {
+        return index in days
     })
+}
+
+export const GET = (url) => {
+    return new Promise((resolve) => {
+        fetch(url)
+            .then(response => response.json())
+            .then(json => resolve(json))
+    })
+}
+
+
+export function dispatchError(actionType, dispatch) {
+    return (error) => {
+        dispatch({
+            type: `${actionType}_FAILURE`,
+            payload: error,
+            error: true
+        });
+
+        return Promise.reject(error);
+    }
+}
+
+
+export function dispatchSuccess(actionType, dispatch) {
+    return (payload) => {
+        dispatch({
+            type: `${actionType}_SUCCESS`,
+            payload: payload
+        });
+
+        return payload;
+    }
+}
+
+export function dispatchAsync(actionType, asyncCall, payload = {}) {
+
+    return (dispatch) => {
+        dispatch({type: `${actionType}_BEGIN`, payload});
+
+        const p = asyncCall();
+        if (p) {
+            p.then(
+                dispatchSuccess(actionType, dispatch),
+                dispatchError(actionType, dispatch)
+            )
+        }
+
+        return p;
+    }
+}
+
+export function dispatchAsyncBound(dispatch, actionType, asyncCall, payload = {}) {
+    return dispatch(dispatchAsync( actionType, asyncCall, payload))
+
 }

@@ -21,7 +21,7 @@ export default class WeatherBoard extends Component {
             <main className="main">
                 <div className="card cardTemplate weather-forecast">
                     <WeatherCurrent forecast={currentWeather} area={city.name}/>
-                    <WeatherFuture forecasts={forecasts}/>
+                    {/*<WeatherFuture forecasts={forecasts}/>*/}
                 </div>
             </main>
         )
