@@ -18,13 +18,14 @@ export class AddCityModalForm extends Component {
 
     handleAddArea = () => {
         const {addWeather} = this.props;
+        this.props.onClose();
         getLatLngFromAddress(this.state.address)
             .then((latLng) => addWeather({
                 latitude: latLng.lat,
                 longitude: latLng.lng
             }))
             .then(() => {
-                this.props.onClose();
+               console.log('ok')
             }).catch(error => console.error('Error', error))
     }
 

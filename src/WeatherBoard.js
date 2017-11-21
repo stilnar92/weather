@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {timeStampConvertTime, getIconClass} from  './Utils';
 import './App.css';
-import {Icon} from  './Icon';
 import {WeatherFuture} from  './WeatherFuture';
 import WeatherCurrent from "./WeatherCurrent";
-
-const TODAY = 4;
+import {DAYS} from './Constants'
+const TODAY = 1;
 
 export default class WeatherBoard extends Component {
 
@@ -23,13 +21,14 @@ export default class WeatherBoard extends Component {
         } = this.props;
         const currentWeather = forecasts[TODAY];
         return (
-            <main className="main">
-                <div className="card cardTemplate weather-forecast">
-                    <WeatherCurrent forecast={currentWeather} area={city.name}/>
-                    <WeatherFuture forecasts={forecasts}/>
-                    <button id="butRefresh" className="headerButton" onClick={this.handleDeleteWeather} aria-label="Refresh">d</button>
+            <div className="card weather-forecast">
+                <button id="butDelete" className="deleteButton" onClick={this.handleDeleteWeather}>
+                </button>
+                <WeatherCurrent forecast={currentWeather} area={city.name}/>
+                <div className="future">
+                    {forecasts.map((weather, index) => (index in DAYS && <WeatherFuture weather={weather} key={`future_${index}`}/>))}
                 </div>
-            </main>
+            </div>
         )
     }
 }

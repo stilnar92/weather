@@ -3,10 +3,11 @@ import {connect} from 'react-redux'
 import {Header} from './Header';
 import WeatherList from './WeatherList';
 import './App.css';
-import 'react-loading-spinner/src/css/index.css';
+
 import {WeatherPageActions} from './actions/WeatherPageActions';
 import {WeatherPageService} from './Service';
 import {AddCityModalForm} from './AddCityModalForm';
+import {Loader} from './Loader';
 
 class WeatherPage extends Component {
 
@@ -17,11 +18,15 @@ class WeatherPage extends Component {
         }
     }
 
-    componentDidMount() {
-    }
-
     handleRefreshWeather = () => {
-        this.props.loadWeather('Ufa');
+        const {weathers, actions} = this.props;
+        let refreshList = weathers.map((weather) => {
+            const {lat: latitude, lon: longitude} = weather.city.coord;
+            return () => actions.addWeather({latitude, longitude})
+        });
+        actions.deleteAll();
+        Promise.all(refreshList.map((refresh) => refresh()));
+
     }
 
     handleShowAddCityModal = () => {
@@ -33,7 +38,7 @@ class WeatherPage extends Component {
     }
 
     handleAddWeather = (location) => {
-      return this.props.actions.addWeather(location);
+        return this.props.actions.addWeather(location);
     }
 
     handleDeleteWeather = (location) => {
@@ -43,19 +48,23 @@ class WeatherPage extends Component {
 
     render() {
         const {showModal} = this.state;
-        const {weathers} = this.props;
+        const {weathers, isLoading} = this.props;
         return (
             <div>
                 <Header
                     refreshWeather={this.handleRefreshWeather}
                     addCity={this.handleShowAddCityModal}
                 />
-                {<WeatherList weathers={weathers} deleteWeather={this.handleDeleteWeather}/>}
                 <AddCityModalForm
                     showModal={showModal}
                     onClose={this.handleCloseAddCityModal}
                     addWeather={this.handleAddWeather}
                 />
+                {isLoading ? <Loader/> :
+                    <main className="main">
+                        <WeatherList weathers={weathers} deleteWeather={this.handleDeleteWeather}/>
+                    </main>
+                }
             </div>
         );
     }
@@ -63,7 +72,8 @@ class WeatherPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        weathers: state.weathers.list
+        weathers: state.weathers.list,
+        isLoading: state.weathers.status === 'RUNNING'
     }
 }
 

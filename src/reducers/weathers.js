@@ -27,8 +27,14 @@ export const weathers = (state = initialState, action) => {
         case 'DELETE_WEATHER':
             return {
                 list: state.list.filter((item) => item.city !== action.payload),
-                status: 'FAIL',
+                status: 'SUCCESS',
                 error: action.payload,
+            }
+        case 'DELETE_ALL':
+            return {
+                list: [],
+                status: 'SUCCESS',
+                error: null,
             }
         default:
             return state

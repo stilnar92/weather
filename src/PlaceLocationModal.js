@@ -1,8 +1,7 @@
 /*global google*/
 import React, {Component} from 'react';
-import {Modal, Button, FormGroup, HelpBlock, FormControl, ControlLabel} from 'react-bootstrap';
+import {Modal, Button, FormGroup, ControlLabel} from 'react-bootstrap';
 import './App.css';
-import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
 export class PlaceLocationModal extends Component {
 
