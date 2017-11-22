@@ -2,30 +2,37 @@
 import fetch from 'isomorphic-fetch'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
-export const getAddressFromCoords = (lat, lng) => {
-    const geocoder = new google.maps.Geocoder();
-    let latlng = new google.maps.LatLng(lat, lng);
-
-    return new Promise((resolve, reject) => geocoder.geocode({'latLng': latlng}, (results, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-            let area = null;
-            if (results[1]) {
-                for (let i = 0; i < results[0].address_components.length; i++) {
-                    for (let b = 0; b < results[0].address_components[i].types.length; b++) {
-                        if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
-                            area = results[0].address_components[i];
-                            break;
-                        }
-                    }
-                }
-                resolve(area);
-            } else {
-                alert("No results found");
-            }
+export const getCityFromArea = () => {
+    return Promise.resolve(geocodeByAddress(this.state.area).then(results => {
+        let city = '';
+        if (results.length > 1) {
+            city = results[1];
         } else {
-            alert("Geocoder failed due to: " + status);
+            city = results[0];
         }
-    }));
+        return city.address_components[0].long_name
+    }))
+}
+export const getUserArea = () => {
+    return new Promise((resolve) =>
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let geocoder = new google.maps.Geocoder();
+            let geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+            geocoder.geocode({'latLng': geolocate}, (results, status) => {
+                let result;
+                if (status == google.maps.GeocoderStatus.OK) {
+
+                    if (results.length > 1) {
+                        result = results[1];
+                    } else {
+                        result = results[0];
+                    }
+                    resolve(result.address_components[0].long_name);
+                }
+            });
+        })
+    )
 }
 
 export const timeStampConvertTime = (timeStamp) => {
@@ -118,7 +125,7 @@ export const GET = (url) => {
         fetch(url)
             .then(response => response.json())
             .then(json => {
-                if(json.cod && json.cod === "404") {
+                if (json.cod && json.cod === "404") {
                     reject(json)
                 }
                 resolve(json)
@@ -169,13 +176,11 @@ export function dispatchAsync(actionType, asyncCall, payload = {}) {
     }
 }
 
+
+export function dispatchPromise(dispatch, actionType, payload = {}) {
+    return Promise.resolve(dispatch({type: actionType, payload}))
+}
 export function dispatchAsyncBound(dispatch, actionType, asyncCall, payload = {}) {
     return dispatch(dispatchAsync(actionType, asyncCall, payload))
 
-}
-
-export const getLatLngFromAddress = (address) => {
-    return geocodeByAddress(address).then(results => {
-        return results[0].address_components[0].short_name
-    })
 }

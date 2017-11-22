@@ -1,12 +1,12 @@
-import {dispatchAsyncBound} from '../Utils';
+import {dispatchAsyncBound, dispatchPromise} from '../Utils';
 
-export class WeatherPageActions {
+export class WeathersPageActions {
     constructor(api, dispatch) {
         this.api = api;
         this.dispatch = dispatch;
     }
 
-    addWeather(area) {
+    addWeather = (area) => {
         const getWathers = () => this.api.getWeathers(area);
         return dispatchAsyncBound(
             this.dispatch,
@@ -15,12 +15,20 @@ export class WeatherPageActions {
         )
     }
 
-    deleteWeather(area) {
+    deleteWeather = (area) => {
         this.dispatch(
             {
                 type: 'DELETE_WEATHER',
                 payload: area
             }
+        )
+    }
+
+    saveUserLocation = (location) => {
+        return dispatchPromise(
+            this.dispatch,
+            'CHECK_USER_LOCATION',
+            location
         )
     }
 

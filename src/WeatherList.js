@@ -6,15 +6,19 @@ export default class WeatherList extends Component {
     render() {
         const {weathers, deleteWeather} = this.props;
         return (
-            weathers.map((weather, index) =>
-                (
-                    <WeatherBoard
-                        key={weather.id}
-                        item={weather}
-                        deleteWeather={deleteWeather}
-                    />
-                )
-            )
+            <main className="main">
+                {
+                    weathers.map((weather, index) =>
+                        (
+                            <WeatherBoard
+                                key={weather.id}
+                                item={weather}
+                                deleteWeather={deleteWeather}
+                            />
+                        )
+                    )
+                }
+            </main>
         )
     }
 }

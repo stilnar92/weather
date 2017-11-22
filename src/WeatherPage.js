@@ -4,12 +4,11 @@ import {Header} from './Header';
 import WeatherList from './WeatherList';
 import './App.css';
 
-import {WeatherPageActions} from './actions/WeatherPageActions';
-import {ErrorActions} from './actions/ErrorActions';
-import {WeatherPageService} from './Service';
+import {WeathersPageActions} from './actions/WeathersPageActions';
+import {WeathersPageService} from './Service';
+import {InterfaceActions} from './actions/InterfaceActions';
 import {AddCityModalForm} from './AddCityModalForm';
 import {Loader} from './Loader';
-import {ErrorModal} from './Errors';
 
 class WeatherPage extends Component {
 
@@ -23,8 +22,7 @@ class WeatherPage extends Component {
     handleRefreshWeather = () => {
         const {weathers, actions} = this.props;
         let refreshList = weathers.map((weather) => {
-            const {lat: latitude, lon: longitude} = weather.city.coord;
-            return () => actions.addWeather({latitude, longitude})
+            return () => actions.addWeather(weather.city.name)
         });
         actions.deleteAll();
         Promise.all(refreshList.map((refresh) => refresh()));
@@ -40,9 +38,11 @@ class WeatherPage extends Component {
     }
 
     handleAddWeather = (location) => {
-        return this.props.actions.addWeather(location).then((value) => {
-            this.props.errorActions('City not found')
-        });
+        const {errorActions} = this.props;
+        this.props.actions.addWeather(location)
+            .catch((error) => {
+                errorActions.notify(error.message);
+            });
     }
 
     handleDeleteWeather = (location) => {
@@ -52,23 +52,19 @@ class WeatherPage extends Component {
 
     render() {
         const {showModal} = this.state;
-        const {weathers, isLoading, errorStatus, error} = this.props;
+        const {weathers, isLoading} = this.props;
         return (
             <div>
                 <Header
                     refreshWeather={this.handleRefreshWeather}
                     addCity={this.handleShowAddCityModal}
                 />
+                {isLoading ? <Loader/> : <WeatherList weathers={weathers} deleteWeather={this.handleDeleteWeather}/>}
                 <AddCityModalForm
                     showModal={showModal}
                     onClose={this.handleCloseAddCityModal}
                     addWeather={this.handleAddWeather}
                 />
-                {isLoading ? <Loader/> :
-                    <main className="main">
-                        <WeatherList weathers={weathers} deleteWeather={this.handleDeleteWeather}/>
-                    </main>
-                }
             </div>
         );
     }
@@ -78,15 +74,13 @@ const mapStateToProps = (state, ownProps) => {
     return {
         weathers: state.weathers.list,
         isLoading: state.weathers.status === 'RUNNING',
-        errorStatus: state.weathers.status === 'FAIL',
-        error: state.weathers.error.message
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        actions: new WeatherPageActions(new WeatherPageService(), dispatch),
-        errorActions: new ErrorActions()
+        actions: new WeathersPageActions(new WeathersPageService(), dispatch),
+        errorActions: new InterfaceActions(dispatch)
     }
 }
 

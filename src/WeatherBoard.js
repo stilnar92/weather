@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './App.css';
 import {WeatherFuture} from  './WeatherFuture';
 import WeatherCurrent from "./WeatherCurrent";
 import {DAYS} from './Constants'

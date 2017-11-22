@@ -1,8 +1,6 @@
 const initialState = {
     data: {
-        area: null,
-        latitude: null,
-        longitude: null
+        area: '',
     },
     status: 'IDLE',
     error: null
@@ -10,7 +8,7 @@ const initialState = {
 
 export const location = (state = initialState, action) => {
     switch (action.type) {
-        case 'WEATHER_LOCATION_SAVE':
+        case 'CHECK_USER_LOCATION':
             return {
                 data: action.payload,
                 status: 'SUCCESS',

@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import './App.css';
-import {PlaceLocationModal} from './PlaceLocationModal'
-import {getAddressFromCoords} from './Utils'
-import {addWeather, locationSave} from './actions'
-
+import {getUserArea} from './Utils'
+import {WeathersPageActions} from './actions/WeathersPageActions';
+import {WeathersPageService} from './Service';
+import {PlaceLocationModal} from  './PlaceLocationModal';
 class Location extends Component {
 
     constructor(props) {
@@ -17,22 +16,12 @@ class Location extends Component {
     }
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            getAddressFromCoords(latitude, longitude).then((area) => {
-                this.props.locationSave({
-                    area: area.short_name,
-                    latitude,
-                    longitude
-
-                }).then(() => {
-                    this.setState({showModal: true})
-                })
+        const {saveUserLocation} = this.props.actions;
+        getUserArea().then((area) => {
+            saveUserLocation({area}).then(() => {
+                this.setState({showModal: true})
             })
-        }, () => {
-            return new Error('Permission denied');
-        });
+        })
     }
 
     handleCloseAddCityModal = () => {
@@ -40,18 +29,13 @@ class Location extends Component {
     }
 
     handleContinue = () => {
-        const {
-            location: {
-                latitude,
-                longitude
-            }
-        } = this.props;
+        const {location, actions: {addWeather}} = this.props;
         this.setState({
                 isLocation: true,
                 showModal: false
             },
             () => {
-                this.props.addWeather({latitude, longitude})
+                addWeather(location.area)
             }
         )
 
@@ -67,37 +51,31 @@ class Location extends Component {
         const {location} = this.props;
         return (
             <div>
-                {this.props.children}
-                {/*<PlaceLocationModal*/}
-                    {/*showModal={showModal}*/}
-                    {/*value={location.area}*/}
-                    {/*onClose={this.handleCloseAddCityModal}*/}
-                    {/*onContinue={this.handleContinue}*/}
-                    {/*onCloseModal={this.handleCloseModal}*/}
-                {/*/>*/}
+                {isLocation && this.props.children}
+                <PlaceLocationModal
+                    showModal={showModal}
+                    value={location.area}
+                    onClose={this.handleCloseAddCityModal}
+                    onContinue={this.handleContinue}
+                    onCloseModal={this.handleCloseModal}
+                />
             </div>
         )
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        location: state.location.data
-    }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        addWeather: (location) => {
-            return new Promise((resolve) => resolve(dispatch(addWeather(location))))
-        },
-        locationSave: (location) => {
-            return new Promise((resolve) => resolve(dispatch(locationSave(location))))
+const
+    mapStateToProps = (state, ownProps) => {
+        return {
+            location: state.location.data
         }
     }
-}
 
-export default  connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Location)
+const
+    mapDispatchToProps = (dispatch, ownProps) => {
+        return {
+            actions: new WeathersPageActions(new WeathersPageService(), dispatch),
+        }
+    }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Location)

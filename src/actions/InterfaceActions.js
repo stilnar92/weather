@@ -1,4 +1,8 @@
-export class ErrorActions {
+export class InterfaceActions {
+    constructor(dispatch) {
+        this.dispatch = dispatch;
+    }
+
     notify(errorMessage) {
         this.dispatch(
             {

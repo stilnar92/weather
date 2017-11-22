@@ -1,6 +1,6 @@
 /*global google*/
 import React, {Component} from 'react';
-import {Modal, Button, FormGroup, ControlLabel} from 'react-bootstrap';
+import {Modal, Button, FormGroup, ControlLabel, ButtonToolbar} from 'react-bootstrap';
 import './App.css';
 
 export class PlaceLocationModal extends Component {
@@ -18,25 +18,27 @@ export class PlaceLocationModal extends Component {
                     onHide={this.props.onCloseModal}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>Ваш регион</Modal.Title>
+                        <Modal.Title>Your region</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form>
                             <FormGroup>
                                 <ControlLabel>{value}</ControlLabel>
                             </FormGroup>
-                            <Button
-                                bsStyle="primary"
-                                onClick={onContinue}
-                            >
-                                Да
-                            </Button>
-                            <Button
-                                bsStyle="primary"
-                                onClick={onClose}
-                            >
-                                Нет, указать другой
-                            </Button>
+                            <ButtonToolbar>
+                                <Button
+                                    bsStyle="primary"
+                                    onClick={onContinue}
+                                >
+                                    Yes
+                                </Button>
+                                <Button
+                                    bsStyle="primary"
+                                    onClick={onClose}
+                                >
+                                    No
+                                </Button>
+                            </ButtonToolbar>
                         </form>
                     </Modal.Body>
                 </Modal>

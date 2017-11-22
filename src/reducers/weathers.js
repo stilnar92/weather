@@ -1,14 +1,14 @@
 const initialState = {
     list: [],
     status: 'IDLE',
-    error: null
+    error: {}
 }
 
 export const weathers = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_WEATHER_BEGIN':
             return {
-                list:  state.list,
+                list: state.list,
                 status: 'RUNNING',
                 error: []
             }
@@ -20,7 +20,7 @@ export const weathers = (state = initialState, action) => {
             }
         case 'ADD_WEATHER_FAILURE':
             return {
-                list: [],
+                list: state.list,
                 status: 'FAIL',
                 error: action.payload,
             }

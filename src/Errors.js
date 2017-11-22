@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Modal, Button, FormGroup, ControlLabel} from 'react-bootstrap';
 import './App.css';
 import {connect} from 'react-redux'
-import {ErrorActions} from './actions/ErrorActions';
+import {InterfaceActions} from './actions/InterfaceActions';
 export class Errors extends Component {
 
     constructor(props) {
@@ -12,12 +12,16 @@ export class Errors extends Component {
         }
     }
 
+    handleClose = () => {
+        this.props.actions.clear();
+    }
+
     render() {
         return (
             <div className="static-modal">
                 <Modal
                     show={!!this.props.error.message}
-                    onHide={this.props.actions.clear()}
+                    onHide={this.handleClose}
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Ошибка</Modal.Title>
@@ -35,15 +39,15 @@ export class Errors extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
     return {
         error: state.error
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        actions: new ErrorActions(),
+        actions: new InterfaceActions(dispatch),
     }
 }
 export default connect(

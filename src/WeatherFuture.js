@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {getIconClass} from  './Utils';
-import './App.css';
 import {Icon} from  './Icon';
 
 

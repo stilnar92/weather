@@ -1,32 +1,41 @@
-/*global google*/
 import React, {Component} from 'react';
-import {Modal, Button, FormGroup} from 'react-bootstrap';
+import {
+    Modal,
+    Button,
+    FormGroup,
+    ButtonToolbar
+} from 'react-bootstrap';
 import './App.css';
 import PlacesAutocomplete from 'react-places-autocomplete'
-import {getLatLngFromAddress} from "./Utils";
+import  {getCityFromArea} from  './Utils';
 
 export class AddCityModalForm extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            address: ''
+            area: ''
         }
     }
 
-    handleChangeCity = (address) => {this.setState({address})}
+    handleChangeArea = (area) => {
+        this.setState({area})
+    }
 
     handleAddArea = () => {
         const {addWeather} = this.props;
         this.props.onClose();
-        getLatLngFromAddress(this.state.address)
-            .then((area) => addWeather(area))
+        getCityFromArea(this.state.area).then((city) => addWeather(city));
+    }
+
+    handleCancel = () => {
+        this.props.onClose();
     }
 
     render() {
         const inputProps = {
-            value: this.state.address,
-            onChange: this.handleChangeCity,
+            value: this.state.area,
+            onChange: this.handleChangeArea,
         }
         return (
             <div className="static-modal">
@@ -35,19 +44,27 @@ export class AddCityModalForm extends Component {
                     onHide={this.props.onClose}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>Выберите город</Modal.Title>
+                        <Modal.Title>Add new city</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form>
                             <FormGroup>
                                 <PlacesAutocomplete inputProps={inputProps}/>
                             </FormGroup>
-                            <Button
-                                bsStyle="primary"
-                                onClick={this.handleAddArea}
-                            >
-                                Добавить
-                            </Button>
+                            <ButtonToolbar>
+                                <Button
+                                    bsStyle="primary"
+                                    onClick={this.handleAddArea}
+                                >
+                                    Add
+                                </Button>
+                                <Button
+                                    bsStyle="primary"
+                                    onClick={this.handleCancel}
+                                >
+                                    Cancel
+                                </Button>
+                            </ButtonToolbar>
                         </form>
                     </Modal.Body>
                 </Modal>
