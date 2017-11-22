@@ -10,17 +10,17 @@ export const weathers = (state = initialState, action) => {
             return {
                 list:  state.list,
                 status: 'RUNNING',
-                error: null
+                error: []
             }
         case 'ADD_WEATHER_SUCCESS':
             return {
                 list: [...state.list, action.payload],
                 status: 'SUCCESS',
-                error: null
+                error: []
             }
         case 'ADD_WEATHER_FAILURE':
             return {
-                list: null,
+                list: [],
                 status: 'FAIL',
                 error: action.payload,
             }
@@ -34,7 +34,7 @@ export const weathers = (state = initialState, action) => {
             return {
                 list: [],
                 status: 'SUCCESS',
-                error: null,
+                error: [],
             }
         default:
             return state

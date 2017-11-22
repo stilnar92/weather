@@ -20,13 +20,7 @@ export class AddCityModalForm extends Component {
         const {addWeather} = this.props;
         this.props.onClose();
         getLatLngFromAddress(this.state.address)
-            .then((latLng) => addWeather({
-                latitude: latLng.lat,
-                longitude: latLng.lng
-            }))
-            .then(() => {
-               console.log('ok')
-            }).catch(error => console.error('Error', error))
+            .then((area) => addWeather(area))
     }
 
     render() {

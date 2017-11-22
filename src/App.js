@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import WeatherPage from './WeatherPage';
 import './App.css';
 import Location from "./Location";
+import Errors from "./Errors";
 
 class App extends Component {
 
@@ -11,6 +12,7 @@ class App extends Component {
                 <Location>
                     <WeatherPage/>
                 </Location>
+                <Errors/>
             </div>
         );
     }

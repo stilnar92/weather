@@ -5,9 +5,11 @@ import WeatherList from './WeatherList';
 import './App.css';
 
 import {WeatherPageActions} from './actions/WeatherPageActions';
+import {ErrorActions} from './actions/ErrorActions';
 import {WeatherPageService} from './Service';
 import {AddCityModalForm} from './AddCityModalForm';
 import {Loader} from './Loader';
+import {ErrorModal} from './Errors';
 
 class WeatherPage extends Component {
 
@@ -38,7 +40,9 @@ class WeatherPage extends Component {
     }
 
     handleAddWeather = (location) => {
-        return this.props.actions.addWeather(location);
+        return this.props.actions.addWeather(location).then((value) => {
+            this.props.errorActions('City not found')
+        });
     }
 
     handleDeleteWeather = (location) => {
@@ -48,7 +52,7 @@ class WeatherPage extends Component {
 
     render() {
         const {showModal} = this.state;
-        const {weathers, isLoading} = this.props;
+        const {weathers, isLoading, errorStatus, error} = this.props;
         return (
             <div>
                 <Header
@@ -73,13 +77,16 @@ class WeatherPage extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         weathers: state.weathers.list,
-        isLoading: state.weathers.status === 'RUNNING'
+        isLoading: state.weathers.status === 'RUNNING',
+        errorStatus: state.weathers.status === 'FAIL',
+        error: state.weathers.error.message
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        actions: new WeatherPageActions(new WeatherPageService(), dispatch)
+        actions: new WeatherPageActions(new WeatherPageService(), dispatch),
+        errorActions: new ErrorActions()
     }
 }
 
