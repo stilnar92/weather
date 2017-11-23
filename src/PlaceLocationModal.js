@@ -1,24 +1,20 @@
 /*global google*/
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {Modal, Button, FormGroup, ControlLabel, ButtonToolbar} from 'react-bootstrap';
 import './App.css';
 
-export class PlaceLocationModal extends Component {
-
-    constructor(props) {
-        super(props);
-    }
+export class PlaceLocationModal extends PureComponent {
 
     render() {
-        const {value, onContinue, onClose, onCloseModal} = this.props;
+        const {value, showModal, onConfirm, onCancel} = this.props;
         return (
             <div className="static-modal">
                 <Modal
-                    show={this.props.showModal}
-                    onHide={this.props.onCloseModal}
+                    show={showModal}
+                    onHide={onCancel}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>Your region</Modal.Title>
+                        <Modal.Title>Your region </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <form>
@@ -28,13 +24,13 @@ export class PlaceLocationModal extends Component {
                             <ButtonToolbar>
                                 <Button
                                     bsStyle="primary"
-                                    onClick={onContinue}
+                                    onClick={onConfirm}
                                 >
                                     Yes
                                 </Button>
                                 <Button
                                     bsStyle="primary"
-                                    onClick={onClose}
+                                    onClick={onCancel}
                                 >
                                     No
                                 </Button>

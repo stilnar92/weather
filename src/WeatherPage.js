@@ -29,42 +29,20 @@ class WeatherPage extends Component {
 
     }
 
-    handleShowAddCityModal = () => {
-        this.setState({showModal: true})
-    }
-
-    handleCloseAddCityModal = () => {
-        this.setState({showModal: false})
-    }
-
-    handleAddWeather = (location) => {
-        const {errorActions} = this.props;
-        this.props.actions.addWeather(location)
-            .catch((error) => {
-                errorActions.notify(error.message);
-            });
-    }
-
     handleDeleteWeather = (location) => {
         return this.props.actions.deleteWeather(location);
     }
 
 
     render() {
-        const {showModal} = this.state;
         const {weathers, isLoading} = this.props;
         return (
             <div>
                 <Header
                     refreshWeather={this.handleRefreshWeather}
-                    addCity={this.handleShowAddCityModal}
+                    addCity={this.props.handleShowAddCityModal}
                 />
                 {isLoading ? <Loader/> : <WeatherList weathers={weathers} deleteWeather={this.handleDeleteWeather}/>}
-                <AddCityModalForm
-                    showModal={showModal}
-                    onClose={this.handleCloseAddCityModal}
-                    addWeather={this.handleAddWeather}
-                />
             </div>
         );
     }

@@ -2,8 +2,8 @@
 import fetch from 'isomorphic-fetch'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 
-export const getCityFromArea = () => {
-    return Promise.resolve(geocodeByAddress(this.state.area).then(results => {
+export const getCityFromArea = (area) => {
+    return Promise.resolve(geocodeByAddress(area).then(results => {
         let city = '';
         if (results.length > 1) {
             city = results[1];
@@ -13,7 +13,7 @@ export const getCityFromArea = () => {
         return city.address_components[0].long_name
     }))
 }
-export const getUserArea = () => {
+export const findUserArea = () => {
     return new Promise((resolve) =>
         navigator.geolocation.getCurrentPosition(function (position) {
             let geocoder = new google.maps.Geocoder();

@@ -9,9 +9,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Location>
-                    <WeatherPage/>
-                </Location>
+                <Location/>
                 <Errors/>
             </div>
         );

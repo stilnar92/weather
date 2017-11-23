@@ -27,8 +27,16 @@ export class WeathersPageActions {
     saveUserLocation = (location) => {
         return dispatchPromise(
             this.dispatch,
-            'CHECK_USER_LOCATION',
+            'FIND_USER_LOCATION',
             location
+        )
+    }
+
+    userConfirmLocation = () => {
+        this.dispatch(
+            {
+                type: 'USER_CONFIRM_LOCATION'
+            }
         )
     }
 

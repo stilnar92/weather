@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 import './App.css';
 import PlacesAutocomplete from 'react-places-autocomplete'
-import  {getCityFromArea} from  './Utils';
+
 
 export class AddCityModalForm extends Component {
 
@@ -21,15 +21,10 @@ export class AddCityModalForm extends Component {
     handleChangeArea = (area) => {
         this.setState({area})
     }
-
-    handleAddArea = () => {
+    //
+    handleAddWeather = () => {
         const {addWeather} = this.props;
-        this.props.onClose();
-        getCityFromArea(this.state.area).then((city) => addWeather(city));
-    }
-
-    handleCancel = () => {
-        this.props.onClose();
+        addWeather(this.state.area);
     }
 
     render() {
@@ -54,13 +49,13 @@ export class AddCityModalForm extends Component {
                             <ButtonToolbar>
                                 <Button
                                     bsStyle="primary"
-                                    onClick={this.handleAddArea}
+                                    onClick={this.handleAddWeather}
                                 >
                                     Add
                                 </Button>
                                 <Button
                                     bsStyle="primary"
-                                    onClick={this.handleCancel}
+                                    onClick={this.props.onClose}
                                 >
                                     Cancel
                                 </Button>

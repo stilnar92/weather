@@ -1,17 +1,21 @@
 const initialState = {
-    data: {
-        area: '',
-    },
+    userLocation: '',
     status: 'IDLE',
     error: null
 }
 
 export const location = (state = initialState, action) => {
     switch (action.type) {
-        case 'CHECK_USER_LOCATION':
+        case 'FIND_USER_LOCATION':
             return {
-                data: action.payload,
-                status: 'SUCCESS',
+                userLocation: action.payload,
+                status: 'FOUND',
+                error: null,
+            }
+        case 'USER_CONFIRM_LOCATION':
+            return {
+                ...state,
+                status: 'CONFIRM',
                 error: null,
             }
         default:
