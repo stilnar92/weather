@@ -2,7 +2,7 @@
   "name": "weather",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://stilnar92.github.io/weather/",
+  "homepage": "http://stilnar92.github.io/weather/",
   "dependencies": {
     "dotenv": "^4.0.0",
     "gh-pages": "^1.1.0",
