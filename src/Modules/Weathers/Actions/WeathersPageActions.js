@@ -1,4 +1,4 @@
-import {dispatchAsyncBound, dispatchPromise} from '../Utils';
+import {dispatchAsyncBound} from '../../../Core/Utils';
 
 export class WeathersPageActions {
     constructor(api, dispatch) {
@@ -20,22 +20,6 @@ export class WeathersPageActions {
             {
                 type: 'DELETE_WEATHER',
                 payload: area
-            }
-        )
-    }
-
-    saveUserLocation = (location) => {
-        return dispatchPromise(
-            this.dispatch,
-            'FIND_USER_LOCATION',
-            location
-        )
-    }
-
-    userConfirmLocation = () => {
-        this.dispatch(
-            {
-                type: 'USER_CONFIRM_LOCATION'
             }
         )
     }

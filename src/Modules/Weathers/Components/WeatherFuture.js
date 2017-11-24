@@ -1,6 +1,6 @@
 import React from 'react';
-import {getIconClass, getDayofWeek} from  './Utils';
-import {Icon} from  './Icon';
+import {getIconClass, getDayofWeek} from  '../Utils';
+import {Icon} from  '../../../Core/Components/Icon';
 
 export const WeatherFuture = ({weather}) => {
     return (

@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {Header} from './Header';
-import WeatherList from './WeatherList';
-import './App.css';
-
-import {WeathersPageActions} from './actions/WeathersPageActions';
-import {WeathersPageService} from './Service';
-import {InterfaceActions} from './actions/InterfaceActions';
-import {Loader} from './Loader';
+import {Header} from '../Components/Header';
+import WeatherList from '../Components/WeatherList';
+import {WeathersPageActions} from '../Actions/WeathersPageActions';
+import {WeathersPageService} from '../Service';
+import {NotifyActions} from '../../../Core/Actions/NotifyActions';
+import {Loader} from '../../../Core/Components/Loader';
 
 class WeatherPage extends Component {
 
@@ -25,7 +23,6 @@ class WeatherPage extends Component {
         });
         actions.deleteAll();
         Promise.all(refreshList.map((refresh) => refresh()));
-
     }
 
     handleDeleteWeather = (location) => {
@@ -47,17 +44,18 @@ class WeatherPage extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
+    let {weathersModule: {weathers}} = state;
     return {
-        weathers: state.weathers.list,
-        isLoading: state.weathers.status === 'RUNNING',
+        weathers:  weathers.list,
+        isLoading: weathers.status === 'RUNNING',
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         actions: new WeathersPageActions(new WeathersPageService(), dispatch),
-        errorActions: new InterfaceActions(dispatch)
+        errorActions: new NotifyActions(dispatch)
     }
 }
 

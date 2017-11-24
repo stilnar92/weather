@@ -1,13 +1,13 @@
-export class InterfaceActions {
+export class NotifyActions {
     constructor(dispatch) {
         this.dispatch = dispatch;
     }
 
-    notify(errorMessage) {
+    notify({type, message}) {
         this.dispatch(
             {
-                type: 'SHOW_ERROR',
-                payload: errorMessage
+                type: type,
+                payload: message
             }
         )
     }

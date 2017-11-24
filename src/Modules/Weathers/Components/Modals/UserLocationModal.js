@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
-import './App.css';
 
-export class PlaceLocationModal extends PureComponent {
+export class UserLocationModal extends PureComponent {
 
     render() {
         const {value, showModal, onConfirm, onCancel} = this.props;

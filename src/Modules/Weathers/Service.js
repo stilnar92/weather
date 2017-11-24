@@ -1,5 +1,5 @@
-import {OPEN_WEATHER_API_KEY} from './Constants'
-import {GET} from './Utils';
+import {OPEN_WEATHER_API_KEY} from '../../Core/Constants'
+import {GET} from '../../Utils';
 const REAL_API = true;
 const MOCK_URL = 'http://localhost:3002/weathers';
 

@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
-import './App.css';
 import PlacesAutocomplete from 'react-places-autocomplete'
 
-
-export class AddCityModalForm extends Component {
+export class AddWeatherAreaModal extends Component {
 
     constructor(props) {
         super(props);
@@ -12,18 +10,19 @@ export class AddCityModalForm extends Component {
         }
     }
 
-    handleChangeArea = (area) => {
+    handleChoiceArea = (area) => {
         this.setState({area})
     }
     handleAddWeather = () => {
         const {addWeather} = this.props;
         addWeather(this.state.area);
+        this.setState({area: ''})
     }
 
     render() {
         const inputProps = {
             value: this.state.area,
-            onChange: this.handleChangeArea,
+            onChange: this.handleChoiceArea,
         }
         return (
             <div className={`dialog-container${this.props.showModal ? '--visible': ''}`}>

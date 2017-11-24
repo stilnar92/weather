@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import './App.css';
-import Location from "./Location";
-import Errors from "./Errors";
+import './Styles/App.css';
+import Location from "./Modules/Weathers/Components/Location";
+import Errors from "./Core/Components/Errors";
 
 class App extends Component {
 

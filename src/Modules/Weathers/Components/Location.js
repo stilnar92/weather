@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {findUserArea} from './Utils'
-import {WeathersPageActions} from './actions/WeathersPageActions';
-import {InterfaceActions} from './actions/InterfaceActions';
-import {WeathersPageService} from './Service';
-import {PlaceLocationModal} from './PlaceLocationModal';
-import {AddCityModalForm} from './AddCityModalForm';
-import {Loader} from './Loader';
-import WeatherPage from './WeatherPage';
-import  {getCityFromArea} from  './Utils';
+import {findUserArea, getCityFromArea} from '../../../Core/Utils'
+import {WeathersPageActions, LocationActions} from '../Actions/';
+import {NotifyActions} from '../../../Core/Actions/NotifyActions';
+import {WeathersPageService} from '../Service';
+import {UserLocationModal, AddWeatherAreaModal} from './Modals';
+import {Loader} from '../../../Core/Components/Loader';
+import WeatherPage from '../Pages/WeatherPage';
 
 class Location extends Component {
-
 
     constructor(props) {
         super(props);
@@ -22,9 +19,8 @@ class Location extends Component {
         }
     }
 
-
     componentDidMount() {
-        const {saveUserLocation} = this.props.actions;
+        const {saveUserLocation} = this.props.locationActions;
         if (this.props.isUserNotConfirmLocation) {
             findUserArea().then((area) => {
                 saveUserLocation(area).then(() => (this.setState({isLocationFind: true})))
@@ -33,8 +29,8 @@ class Location extends Component {
     }
 
     handleConfirmLocation = () => {
-        const {userLocation, actions: {addWeather, userConfirmLocation}} = this.props;
-        userConfirmLocation();
+        const {userLocation, weatherPageActions: {addWeather}, locationActions} = this.props;
+        locationActions.userConfirmLocation();
         addWeather(userLocation);
         this.setState({showModal: false})
 
@@ -44,10 +40,10 @@ class Location extends Component {
     }
 
     handleAddWeather = (area) => {
-        const {actions, errorActions} = this.props;
+        const {weatherPageActions, errorActions} = this.props;
         this.setState({showAddWeatherModal: false}, () => {
-            getCityFromArea(area).then((city) => actions.addWeather(city)).catch((error) => {
-                errorActions.notify(error.message);
+            getCityFromArea(area).then((city) => weatherPageActions.addWeather(city)).catch((error) => {
+                errorActions.notify({type: 'SHOW_ERROR', message: error.message});
             });
         })
     }
@@ -61,15 +57,15 @@ class Location extends Component {
         return (
             <div>
                 {userLocation && isUserNotConfirmLocation &&
-                    <PlaceLocationModal
-                        showModal={this.state.showModal}
-                        value={userLocation}
-                        onConfirm={this.handleConfirmLocation}
-                        onCancel={this.handleShowAddWeatherModal}
-                    />
+                <UserLocationModal
+                    showModal={this.state.showModal}
+                    value={userLocation}
+                    onConfirm={this.handleConfirmLocation}
+                    onCancel={this.handleShowAddWeatherModal}
+                />
                 }
 
-                <AddCityModalForm
+                <AddWeatherAreaModal
                     showModal={this.state.showAddWeatherModal}
                     onClose={this.handleCloseAddCityModal}
                     addWeather={this.handleAddWeather}
@@ -78,7 +74,6 @@ class Location extends Component {
             </div>
         )
     }
-
 
     render() {
         return (
@@ -91,17 +86,19 @@ class Location extends Component {
 
 
 const mapStateToProps = (state) => {
+    let {weathersModule: {location}} = state;
     return {
-        userLocation: state.location.userLocation,
-        isUserNotConfirmLocation: state.location.status !== 'CONFIRM',
-        isLoading: state.location.status === 'IDLE'
+        userLocation: location.userLocation,
+        isUserNotConfirmLocation: location.status !== 'CONFIRM',
+        isLoading: location.status === 'IDLE'
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: new WeathersPageActions(new WeathersPageService(), dispatch),
-        errorActions: new InterfaceActions(dispatch)
+        weatherPageActions: new WeathersPageActions(new WeathersPageService(), dispatch),
+        errorActions: new NotifyActions(dispatch),
+        locationActions: new LocationActions(dispatch)
     }
 }
 

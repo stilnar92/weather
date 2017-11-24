@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {timeStampConvertTime, getIconClass} from  './Utils';
-import {Icon} from  './Icon';
+import {timeStampConvertTime, getIconClass} from  '../Utils';
+import {Icon} from  '../../../Core/Components/Icon';
 
 export default class WeatherCurrent extends Component {
 

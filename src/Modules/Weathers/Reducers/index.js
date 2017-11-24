@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux'
 import {weathers} from './weathers'
 import {location} from './location'
-import {error} from './error'
 
-const rootReducer = combineReducers({
+const weathersModule = combineReducers({
     weathers,
-    location,
-    error
+    location
 });
 
-export default rootReducer;
+export default weathersModule;
