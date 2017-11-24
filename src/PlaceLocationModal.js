@@ -1,6 +1,4 @@
-/*global google*/
-import React, {Component, PureComponent} from 'react';
-import {Modal, Button, FormGroup, ControlLabel, ButtonToolbar} from 'react-bootstrap';
+import React, {PureComponent} from 'react';
 import './App.css';
 
 export class PlaceLocationModal extends PureComponent {
@@ -8,37 +6,18 @@ export class PlaceLocationModal extends PureComponent {
     render() {
         const {value, showModal, onConfirm, onCancel} = this.props;
         return (
-            <div className="static-modal">
-                <Modal
-                    show={showModal}
-                    onHide={onCancel}
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Your region </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form>
-                            <FormGroup>
-                                <ControlLabel>{value}</ControlLabel>
-                            </FormGroup>
-                            <ButtonToolbar>
-                                <Button
-                                    bsStyle="primary"
-                                    onClick={onConfirm}
-                                >
-                                    Yes
-                                </Button>
-                                <Button
-                                    bsStyle="primary"
-                                    onClick={onCancel}
-                                >
-                                    No
-                                </Button>
-                            </ButtonToolbar>
-                        </form>
-                    </Modal.Body>
-                </Modal>
-            </div>
+                <div className={`dialog-container${showModal ? '--visible': ''}`}>
+                    <div className="dialog">
+                        <div className="dialog-title">Your region</div>
+                        <div className="dialog-body">
+                            {value}
+                        </div>
+                        <div className="dialog-buttons">
+                            <button onClick={onConfirm} id="butAddCity" className="button">Yes</button>
+                            <button onClick={onCancel} id="butAddCancel" className="button">No</button>
+                        </div>
+                    </div>
+                </div>
         )
     }
 }

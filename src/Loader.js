@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-import './App.css';
+import React from 'react';
 export const Loader = () => {
     return <div className="loader">
         <svg viewBox="0 0 32 32" width="32" height="32">

@@ -7,6 +7,6 @@ const rootReducer = combineReducers({
     weathers,
     location,
     error
-})
+});
 
-export default rootReducer
+export default rootReducer;

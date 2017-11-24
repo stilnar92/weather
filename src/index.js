@@ -10,8 +10,6 @@ import rootReducer from './reducers'
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
 import  {saveState, loadState} from './Utils';
 
 const initialStore = loadState();

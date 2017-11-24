@@ -1,6 +1,7 @@
 /*global google*/
 import fetch from 'isomorphic-fetch'
-import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
+import {geocodeByAddress,} from 'react-places-autocomplete'
+import {daysOfWeek} from './Constants'
 
 export const getCityFromArea = (area) => {
     return Promise.resolve(geocodeByAddress(area).then(results => {
@@ -21,7 +22,7 @@ export const findUserArea = () => {
 
             geocoder.geocode({'latLng': geolocate}, (results, status) => {
                 let result;
-                if (status == google.maps.GeocoderStatus.OK) {
+                if (status === google.maps.GeocoderStatus.OK) {
 
                     if (results.length > 1) {
                         result = results[1];
@@ -39,13 +40,11 @@ export const timeStampConvertTime = (timeStamp) => {
     let date = new Date(timeStamp * 1000);
     let hours = date.getHours();
     let minutes = "0" + date.getMinutes();
-    let seconds = "0" + date.getSeconds();
-    return `${hours}:${minutes.substr(-2)}:${seconds.substr(-2)}`
+    return `${hours}:${minutes.substr(-2)}`
 }
 
-export const timeStampConvertToDate = (timeStamp) => {
-    let date = new Date(timeStamp * 1000);
-    return `${date.getDate()} ${date.getDay()}`
+export const getDayofWeek = (timeStamp) => {
+    return daysOfWeek[new Date(timeStamp * 1000).getDay()];
 }
 
 export const loadState = () => {
@@ -109,6 +108,8 @@ export const getIconClass = (code) => {
             return 'mist';
         case '50n':
             return 'mist';
+        default:
+            return 'clear-sky-day'
 
     }
 }

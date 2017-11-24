@@ -6,6 +6,7 @@ import {InterfaceActions} from './actions/InterfaceActions';
 import {WeathersPageService} from './Service';
 import {PlaceLocationModal} from './PlaceLocationModal';
 import {AddCityModalForm} from './AddCityModalForm';
+import {Loader} from './Loader';
 import WeatherPage from './WeatherPage';
 import  {getCityFromArea} from  './Utils';
 
@@ -55,25 +56,34 @@ class Location extends Component {
         this.setState({showAddWeatherModal: false})
     }
 
-
-    render() {
+    renderBody = () => {
         const {userLocation, isUserNotConfirmLocation} = this.props;
         return (
             <div>
                 {userLocation && isUserNotConfirmLocation &&
-                <PlaceLocationModal
-                    showModal={this.state.showModal}
-                    value={userLocation}
-                    onConfirm={this.handleConfirmLocation}
-                    onCancel={this.handleShowAddWeatherModal}
-                />
+                    <PlaceLocationModal
+                        showModal={this.state.showModal}
+                        value={userLocation}
+                        onConfirm={this.handleConfirmLocation}
+                        onCancel={this.handleShowAddWeatherModal}
+                    />
                 }
+
                 <AddCityModalForm
                     showModal={this.state.showAddWeatherModal}
                     onClose={this.handleCloseAddCityModal}
                     addWeather={this.handleAddWeather}
                 />
                 <WeatherPage handleShowAddCityModal={this.handleShowAddWeatherModal}/>
+            </div>
+        )
+    }
+
+
+    render() {
+        return (
+            <div>
+                {this.props.isLoading ? <Loader/> : this.renderBody()}
             </div>
         )
     }
@@ -84,6 +94,7 @@ const mapStateToProps = (state) => {
     return {
         userLocation: state.location.userLocation,
         isUserNotConfirmLocation: state.location.status !== 'CONFIRM',
+        isLoading: state.location.status === 'IDLE'
     }
 }
 

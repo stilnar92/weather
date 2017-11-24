@@ -7,7 +7,6 @@ import './App.css';
 import {WeathersPageActions} from './actions/WeathersPageActions';
 import {WeathersPageService} from './Service';
 import {InterfaceActions} from './actions/InterfaceActions';
-import {AddCityModalForm} from './AddCityModalForm';
 import {Loader} from './Loader';
 
 class WeatherPage extends Component {

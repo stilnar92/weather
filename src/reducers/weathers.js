@@ -39,4 +39,5 @@ export const weathers = (state = initialState, action) => {
         default:
             return state
     }
-}
+};
+

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Modal, Button, FormGroup, ControlLabel} from 'react-bootstrap';
 import './App.css';
 import {connect} from 'react-redux'
 import {InterfaceActions} from './actions/InterfaceActions';
@@ -18,22 +17,16 @@ export class Errors extends Component {
 
     render() {
         return (
-            <div className="static-modal">
-                <Modal
-                    show={!!this.props.error.message}
-                    onHide={this.handleClose}
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Ошибка</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form>
-                            <FormGroup>
-                                <ControlLabel>{this.props.error.message}</ControlLabel>
-                            </FormGroup>
-                        </form>
-                    </Modal.Body>
-                </Modal>
+            <div className={`dialog-container${!!this.props.error.message ? '--visible' : ''}`}>
+                <div className="dialog">
+                    <div className="dialog-title">Error</div>
+                    <div className="dialog-body">
+                        {this.props.error.message}
+                    </div>
+                    <div className="dialog-buttons">
+                        <button onClick={this.handleClose} id="butAddCity" className="button">Ok</button>
+                    </div>
+                </div>
             </div>
         )
     }

@@ -11,7 +11,7 @@ export default class WeatherList extends Component {
                     weathers.map((weather, index) =>
                         (
                             <WeatherBoard
-                                key={weather.id}
+                                key={`board-${index}`}
                                 item={weather}
                                 deleteWeather={deleteWeather}
                             />

@@ -141,6 +141,7 @@ body {
 }
 
 .dialog {
+    z-index: 1;
     background: #FFF;
     border-radius: 2px;
     box-shadow: 0 0 14px rgba(0, 0, 0, 0.24), 0 14px 28px rgba(0, 0, 0, 0.48);

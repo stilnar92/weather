@@ -25,7 +25,14 @@ export default class WeatherBoard extends Component {
                 </button>
                 <WeatherCurrent forecast={currentWeather} area={city.name}/>
                 <div className="future">
-                    {forecasts.map((weather, index) => (index in DAYS && <WeatherFuture weather={weather} key={`future_${index}`}/>))}
+                    {forecasts.map((weather, index) =>
+                        (DAYS.includes(index) &&
+                            <WeatherFuture
+                                weather={weather}
+                                index={index}
+                                key={`future_${index}`}
+                            />))
+                    }
                 </div>
             </div>
         )

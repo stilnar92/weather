@@ -10,7 +10,6 @@ export default class WeatherCurrent extends Component {
             forecast: {
                 weather: [
                     {
-                        main,
                         description,
                         icon
                     }
@@ -40,7 +39,7 @@ export default class WeatherCurrent extends Component {
                     <div className="description">
                         <div className="humidity">{`${humidity}%`}</div>
                         <div className="wind">
-                            <span className="value">{`${wind.speed} mph ${parseInt(wind.deg)}°`}</span>
+                            <span className="value">{`${wind.speed} mph ${parseInt(wind.deg, 10)}°`}</span>
                         </div>
                     </div>
                 </div>

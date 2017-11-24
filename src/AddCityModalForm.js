@@ -1,10 +1,4 @@
 import React, {Component} from 'react';
-import {
-    Modal,
-    Button,
-    FormGroup,
-    ButtonToolbar
-} from 'react-bootstrap';
 import './App.css';
 import PlacesAutocomplete from 'react-places-autocomplete'
 
@@ -21,7 +15,6 @@ export class AddCityModalForm extends Component {
     handleChangeArea = (area) => {
         this.setState({area})
     }
-    //
     handleAddWeather = () => {
         const {addWeather} = this.props;
         addWeather(this.state.area);
@@ -33,36 +26,17 @@ export class AddCityModalForm extends Component {
             onChange: this.handleChangeArea,
         }
         return (
-            <div className="static-modal">
-                <Modal
-                    show={this.props.showModal}
-                    onHide={this.props.onClose}
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add new city</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <form>
-                            <FormGroup>
-                                <PlacesAutocomplete inputProps={inputProps}/>
-                            </FormGroup>
-                            <ButtonToolbar>
-                                <Button
-                                    bsStyle="primary"
-                                    onClick={this.handleAddWeather}
-                                >
-                                    Add
-                                </Button>
-                                <Button
-                                    bsStyle="primary"
-                                    onClick={this.props.onClose}
-                                >
-                                    Cancel
-                                </Button>
-                            </ButtonToolbar>
-                        </form>
-                    </Modal.Body>
-                </Modal>
+            <div className={`dialog-container${this.props.showModal ? '--visible': ''}`}>
+                <div className="dialog">
+                    <div className="dialog-title">Add new city</div>
+                    <div className="dialog-body">
+                        <PlacesAutocomplete inputProps={inputProps}/>
+                    </div>
+                    <div className="dialog-buttons">
+                        <button onClick={this.handleAddWeather} id="butAddCity" className="button">Add</button>
+                        <button onClick={this.props.onClose} id="butAddCancel" className="button">Cancel</button>
+                    </div>
+                </div>
             </div>
         )
     }
