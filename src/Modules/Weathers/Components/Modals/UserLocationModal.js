@@ -15,14 +15,12 @@ export class UserLocationModal extends PureComponent {
     render() {
         const {value, showModal} = this.props;
         return (
-            <Portal>
-                <Modal
-                    title="Your region"
-                    showModal={showModal}
-                    body={value}
-                    footer={this.renderModalFooter()}
-                />
-            </Portal>
+            <Modal
+                title="Your region"
+                showModal={showModal}
+                body={value}
+                footer={this.renderModalFooter()}
+            />
         )
     }
 }

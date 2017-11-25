@@ -18,29 +18,33 @@ export class AddWeatherAreaModal extends Component {
         addWeather(this.state.area);
         this.setState({area: ''})
     }
-    renderModalFooter = () => {
-        return (
-            <div>
-                <Button onClick={this.handleAddWeather} className="button margin-right-1" title="Add"/>
-                <Button onClick={this.props.onClose} className="button" title="Cancel"/>
-            </div>
-        )
-    }
 
     render() {
-        const inputProps = {
-            value: this.state.area,
-            onChange: this.handleChoiceArea,
-        }
         return (
-            <Portal>
-                <Modal
-                    title="Add new city"
-                    showModal={this.props.showModal}
-                    body={<PlacesAutocomplete inputProps={inputProps}/>}
-                    footer={this.renderModalFooter()}
-                />
-            </Portal>
+            <Modal
+                title="Add new city"
+                showModal={this.props.showModal}
+                body={
+                    <PlacesAutocomplete inputProps={{
+                        value: this.state.area,
+                        onChange: this.handleChoiceArea,
+                    }}/>
+                }
+                footer={
+                    <div>
+                        <Button
+                            onClick={this.handleAddWeather}
+                            className="button margin-right-1"
+                            title="Add"
+                        />
+                        <Button
+                            onClick={this.props.onClose}
+                            className="button"
+                            title="Cancel"
+                        />
+                    </div>
+                }
+            />
         )
     }
 }

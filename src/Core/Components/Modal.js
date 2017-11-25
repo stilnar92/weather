@@ -1,6 +1,7 @@
 import React from 'react';
 import {Portal} from './Portal'
 export const Modal = ({showModal, body, footer, title}) => (
+    <Portal>
         <div className={`dialog-container${showModal ? '--visible' : ''}`}>
             <div className="dialog">
                 {title && <div className="dialog-title">{title}</div>}
@@ -12,6 +13,7 @@ export const Modal = ({showModal, body, footer, title}) => (
                 </div>
             </div>
         </div>
+    </Portal>
 )
 
 
