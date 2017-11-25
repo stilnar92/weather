@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import WeatherBoard from './WeatherBoard';
+import {Board} from './Board';
 
 export default class WeatherList extends Component {
 
@@ -10,7 +10,7 @@ export default class WeatherList extends Component {
                 {
                     weathers.map((weather, index) =>
                         (
-                            <WeatherBoard
+                            <Board
                                 key={`board-${index}`}
                                 item={weather}
                                 deleteWeather={deleteWeather}

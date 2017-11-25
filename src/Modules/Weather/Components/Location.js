@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {findUserArea, getCityFromArea} from '../../../Core/Utils'
+import {findUserArea} from '../../../Core/Utils'
+import {MODAL_TYPES} from '../../../Core/Constants'
 import {WeathersPageActions, LocationActions} from '../Actions/';
-import {NotifyActions} from '../../../Core/Actions/NotifyActions';
+import {InterfaceActions} from '../../../Core/Actions/InterfaceActions';
 import {WeathersPageService} from '../Service';
-import {UserLocationModal, AddWeatherAreaModal} from './Modals';
+import {LocationInfoModal} from './Modals';
 import {Loader} from '../../../Core/Components/Loader';
-import WeatherPage from '../Pages/WeatherPage';
 
 class Location extends Component {
 
@@ -32,24 +32,15 @@ class Location extends Component {
         const {userLocation, weatherPageActions: {addWeather}, locationActions} = this.props;
         locationActions.userConfirmLocation();
         addWeather(userLocation);
+        
         this.setState({showModal: false})
 
     }
+
     handleShowAddWeatherModal = () => {
-        this.setState({showModal: false, showAddWeatherModal: true})
-    }
-
-    handleAddWeather = (area) => {
-        const {weatherPageActions, errorActions} = this.props;
-        this.setState({showAddWeatherModal: false}, () => {
-            getCityFromArea(area).then((city) => weatherPageActions.addWeather(city)).catch((error) => {
-                errorActions.notify({type: 'SHOW_ERROR', message: error.message});
-            });
-        })
-    }
-
-    handleCloseAddCityModal = () => {
-        this.setState({showAddWeatherModal: false})
+        this.setState({showModal: false});
+        this.props.locationActions.userConfirmLocation();
+        this.props.interfaceActions.showModal(MODAL_TYPES.ADD_WEATHER)
     }
 
     renderBody = () => {
@@ -57,20 +48,14 @@ class Location extends Component {
         return (
             <div>
                 {userLocation && isUserNotConfirmLocation &&
-                <UserLocationModal
-                    showModal={this.state.showModal}
-                    value={userLocation}
-                    onConfirm={this.handleConfirmLocation}
-                    onCancel={this.handleShowAddWeatherModal}
-                />
-                }
-
-                <AddWeatherAreaModal
-                    showModal={this.state.showAddWeatherModal}
-                    onClose={this.handleCloseAddCityModal}
-                    addWeather={this.handleAddWeather}
-                />
-                <WeatherPage handleShowAddCityModal={this.handleShowAddWeatherModal}/>
+                    <LocationInfoModal
+                        showModal={this.state.showModal}
+                        value={userLocation}
+                        onConfirm={this.handleConfirmLocation}
+                        onCancel={this.handleShowAddWeatherModal}
+                    />
+                    }
+                {this.props.children}
             </div>
         )
     }
@@ -97,7 +82,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         weatherPageActions: new WeathersPageActions(new WeathersPageService(), dispatch),
-        errorActions: new NotifyActions(dispatch),
+        interfaceActions: new InterfaceActions(dispatch),
         locationActions: new LocationActions(dispatch)
     }
 }

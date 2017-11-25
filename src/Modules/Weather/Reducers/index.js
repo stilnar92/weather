@@ -4,7 +4,7 @@ import {location} from './location'
 
 const weathersModule = combineReducers({
     weathers,
-    location
+    location,
 });
 
 export default weathersModule;

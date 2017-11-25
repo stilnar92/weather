@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {NotifyActions} from '../Actions/NotifyActions';
+import {InterfaceActions} from '../Actions/InterfaceActions';
 export class Errors extends Component {
 
     constructor(props) {
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: new NotifyActions(dispatch),
+        actions: new InterfaceActions(dispatch),
     }
 }
 export default connect(

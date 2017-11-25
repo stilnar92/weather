@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
-import {Modal, Portal, Button} from '../../../../Core/Components';
-export class UserLocationModal extends PureComponent {
+import {Modal, Button} from '../../../../Core/Components/index';
+export class LocationInfoModal extends PureComponent {
 
     renderModalFooter = () => {
         const {onConfirm, onCancel} = this.props;

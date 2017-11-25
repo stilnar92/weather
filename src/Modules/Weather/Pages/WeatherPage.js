@@ -4,8 +4,9 @@ import {WeatherHeader as Header} from '../Components/WeatherHeader';
 import WeatherList from '../Components/WeatherList';
 import {WeathersPageActions} from '../Actions/WeathersPageActions';
 import {WeathersPageService} from '../Service';
-import {NotifyActions} from '../../../Core/Actions/NotifyActions';
+import {InterfaceActions} from '../../../Core/Actions/InterfaceActions';
 import {Loader} from '../../../Core/Components/Loader';
+import {MODAL_TYPES} from '../../../Core/Constants'
 
 class WeatherPage extends Component {
 
@@ -29,6 +30,9 @@ class WeatherPage extends Component {
         return this.props.actions.deleteWeather(location);
     }
 
+    handleShowAddCityModal = () => {
+        this.props.interfaceActions.showModal(MODAL_TYPES.ADD_WEATHER)
+    }
 
     render() {
         const {weathers, isLoading} = this.props;
@@ -36,7 +40,7 @@ class WeatherPage extends Component {
             <div>
                 <Header
                     refreshWeather={this.handleRefreshWeather}
-                    addCity={this.props.handleShowAddCityModal}
+                    addCity={this.handleShowAddCityModal}
                 />
                 {isLoading ? <Loader/> : <WeatherList weathers={weathers} deleteWeather={this.handleDeleteWeather}/>}
             </div>
@@ -55,7 +59,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         actions: new WeathersPageActions(new WeathersPageService(), dispatch),
-        errorActions: new NotifyActions(dispatch)
+        interfaceActions: new InterfaceActions(dispatch)
     }
 }
 

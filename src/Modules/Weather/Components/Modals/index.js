@@ -1,7 +1,7 @@
 import {AddWeatherAreaModal} from  './AddWeatherAreaModal'
-import {UserLocationModal} from  './UserLocationModal'
+import {LocationInfoModal} from  './LocationInfoModal'
 
 export {
     AddWeatherAreaModal,
-    UserLocationModal
+    LocationInfoModal
 }
