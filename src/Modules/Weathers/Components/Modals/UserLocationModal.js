@@ -1,22 +1,28 @@
 import React, {PureComponent} from 'react';
-
+import {Modal, Portal, Button} from '../../../../Core/Components';
 export class UserLocationModal extends PureComponent {
 
-    render() {
-        const {value, showModal, onConfirm, onCancel} = this.props;
+    renderModalFooter = () => {
+        const {onConfirm, onCancel} = this.props;
         return (
-                <div className={`dialog-container${showModal ? '--visible': ''}`}>
-                    <div className="dialog">
-                        <div className="dialog-title">Your region</div>
-                        <div className="dialog-body">
-                            {value}
-                        </div>
-                        <div className="dialog-buttons">
-                            <button onClick={onConfirm} id="butAddCity" className="button">Yes</button>
-                            <button onClick={onCancel} id="butAddCancel" className="button">No</button>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <Button onClick={onConfirm} className="button margin-right-1" title="Yes"/>
+                <Button onClick={onCancel} className="button" title="No"/>
+            </div>
+        )
+    }
+
+    render() {
+        const {value, showModal} = this.props;
+        return (
+            <Portal>
+                <Modal
+                    title="Your region"
+                    showModal={showModal}
+                    body={value}
+                    footer={this.renderModalFooter()}
+                />
+            </Portal>
         )
     }
 }

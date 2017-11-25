@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete'
-
+import {Modal, Portal, Button} from '../../../../Core/Components';
 export class AddWeatherAreaModal extends Component {
 
     constructor(props) {
@@ -18,6 +18,14 @@ export class AddWeatherAreaModal extends Component {
         addWeather(this.state.area);
         this.setState({area: ''})
     }
+    renderModalFooter = () => {
+        return (
+            <div>
+                <Button onClick={this.handleAddWeather} className="button margin-right-1" title="Add"/>
+                <Button onClick={this.props.onClose} className="button" title="Cancel"/>
+            </div>
+        )
+    }
 
     render() {
         const inputProps = {
@@ -25,18 +33,14 @@ export class AddWeatherAreaModal extends Component {
             onChange: this.handleChoiceArea,
         }
         return (
-            <div className={`dialog-container${this.props.showModal ? '--visible': ''}`}>
-                <div className="dialog">
-                    <div className="dialog-title">Add new city</div>
-                    <div className="dialog-body">
-                        <PlacesAutocomplete inputProps={inputProps}/>
-                    </div>
-                    <div className="dialog-buttons">
-                        <button onClick={this.handleAddWeather} id="butAddCity" className="button">Add</button>
-                        <button onClick={this.props.onClose} id="butAddCancel" className="button">Cancel</button>
-                    </div>
-                </div>
-            </div>
+            <Portal>
+                <Modal
+                    title="Add new city"
+                    showModal={this.props.showModal}
+                    body={<PlacesAutocomplete inputProps={inputProps}/>}
+                    footer={this.renderModalFooter()}
+                />
+            </Portal>
         )
     }
 }

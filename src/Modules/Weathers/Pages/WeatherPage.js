@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {Header} from '../Components/Header';
+import {WeatherHeader as Header} from '../Components/WeatherHeader';
 import WeatherList from '../Components/WeatherList';
 import {WeathersPageActions} from '../Actions/WeathersPageActions';
 import {WeathersPageService} from '../Service';
