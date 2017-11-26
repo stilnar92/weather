@@ -7,7 +7,7 @@ export const timeStampConvertTime = (timeStamp) => {
     return `${hours}:${minutes.substr(-2)}`
 }
 
-export const getDayofWeek = (timeStamp) => {
+export const getDayOfWeek = (timeStamp) => {
     return daysOfWeek[new Date(timeStamp * 1000).getDay()];
 }
 export const getIconClass = (code) => {

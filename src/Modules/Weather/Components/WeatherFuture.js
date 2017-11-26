@@ -1,11 +1,11 @@
 import React from 'react';
-import {getIconClass, getDayofWeek} from  '../Utils';
+import {getIconClass, getDayOfWeek} from  '../Utils';
 import {Icon} from  '../../../Core/Components/Icon';
 
-export const WeatherFuture = ({date, iconClass, tempMax, tempMin}) => {
+export const WeatherFuture = ({weekDay, iconClass, tempMax, tempMin}) => {
     return (
         <div className="oneday">
-            <div className="date">{getDayofWeek(date)}</div>
+            <div className="date">{weekDay}</div>
             <Icon type={iconClass}/>
             <div className="temp-high">
                 <span className="value">{tempMax}</span>°
