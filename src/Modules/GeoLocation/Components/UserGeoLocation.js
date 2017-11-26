@@ -2,19 +2,18 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {findUserArea} from '../../../Core/Utils'
 import {MODAL_TYPES} from '../../../Core/Constants'
-import {WeathersPageActions, LocationActions} from '../Actions/';
+import {WeathersPageActions, LocationActions} from '../../Weather/Actions/index';
 import {InterfaceActions} from '../../../Core/Actions/InterfaceActions';
-import {WeathersPageService} from '../Service';
-import {LocationInfoModal} from './Modals';
+import {WeathersPageService} from '../../Weather/Service';
+import {LocationInfoModal} from '../../Weather/Components/Modals/index';
 import {Loader} from '../../../Core/Components/Loader';
 
-class Location extends Component {
+class UserGeoLocation extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isLocationFind: false,
-            showAddWeatherModal: false,
             showModal: true
         }
     }
@@ -71,7 +70,7 @@ class Location extends Component {
 
 
 const mapStateToProps = (state) => {
-    let {weathersModule: {location}} = state;
+    let {location} = state;
     return {
         userLocation: location.userLocation,
         isUserNotConfirmLocation: location.status !== 'CONFIRM',
@@ -87,4 +86,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Location)
+export default connect(mapStateToProps, mapDispatchToProps)(UserGeoLocation)

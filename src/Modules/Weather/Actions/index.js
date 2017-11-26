@@ -1,4 +1,4 @@
-import {LocationActions} from  './LocationActions'
+import {LocationActions} from  '../../GeoLocation/Actions/LocationActions'
 import {WeathersPageActions} from  './WeathersPageActions'
 
 export {

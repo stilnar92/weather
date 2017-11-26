@@ -1,5 +1,5 @@
 import {AddWeatherAreaModal} from  './AddWeatherAreaModal'
-import {LocationInfoModal} from  './LocationInfoModal'
+import {LocationInfoModal} from  '../../../GeoLocation/Components/LocationInfoModal'
 
 export {
     AddWeatherAreaModal,

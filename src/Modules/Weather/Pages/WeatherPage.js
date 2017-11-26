@@ -49,7 +49,7 @@ class WeatherPage extends Component {
 }
 
 const mapStateToProps = (state) => {
-    let {weathersModule: {weathers}} = state;
+    let {weathers} = state;
     return {
         weathers:  weathers.list,
         isLoading: weathers.status === 'RUNNING',

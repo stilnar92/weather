@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {WeatherFuture} from './WeatherFuture';
 import {DAYS} from '../Constants'
+import {getIconClass, getDayofWeek} from '../Utils'
 
 export  class WeatherPredictList extends Component {
 
@@ -11,7 +12,10 @@ export  class WeatherPredictList extends Component {
                 {predicts.map((weather, index) =>
                     (DAYS.includes(index) &&
                         <WeatherFuture
-                            weather={weather}
+                            date={getDayofWeek(weather.dt)}
+                            iconClass={getIconClass(weather.weather[0].icon)}
+                            tempMax={weather.main.temp_max}
+                            tempMin={weather.main.temp_min}
                             index={index}
                             key={`future_${index}`}
                         />))

@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {Modal, Button} from '../../../../Core/Components/index';
+import {Modal, Button} from '../../../Core/Components/index';
 export class LocationInfoModal extends PureComponent {
 
     renderModalFooter = () => {
