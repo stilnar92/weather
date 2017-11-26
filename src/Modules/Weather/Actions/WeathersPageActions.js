@@ -7,11 +7,11 @@ export class WeathersPageActions {
     }
 
     addWeather = (area) => {
-        const getWathers = () => this.api.getWeathers(area);
+        const getWeathers = () => this.api.getWeathers(area);
         return dispatchAsyncBound(
             this.dispatch,
             'ADD_WEATHER',
-            getWathers
+            getWeathers
         )
     }
 

@@ -17,6 +17,10 @@ export class AddWeatherAreaModal extends PureComponent {
         }
     }
 
+    componentWillUpdate() {
+        this.searchInput.focus();
+    }
+
     handleChoiceArea = (area) => {
         this.setState({area})
     }
@@ -42,30 +46,35 @@ export class AddWeatherAreaModal extends PureComponent {
 
     render() {
         return (
-                <Modal
-                    title="Add new city"
-                    showModal={this.props.modal[MODAL_TYPES.ADD_WEATHER] ? this.props.modal[MODAL_TYPES.ADD_WEATHER].isShow : false}
-                    body={
-                        <PlacesAutocomplete inputProps={{
+            <Modal
+                title="Add new city"
+                showModal={this.props.modal[MODAL_TYPES.ADD_WEATHER] ? this.props.modal[MODAL_TYPES.ADD_WEATHER].isShow : false}
+                body={
+                    <PlacesAutocomplete
+                        ref="placesAutocomplete"
+                        inputProps={{
                             value: this.state.area,
                             onChange: this.handleChoiceArea,
-                        }}/>
-                    }
-                    footer={
-                        <div>
-                            <Button
-                                onClick={this.handleAddWeather}
-                                className="button margin-right-1"
-                                title="Add"
-                            />
-                            <Button
-                                onClick={this.handleClose}
-                                className="button"
-                                title="Cancel"
-                            />
-                        </div>
-                    }
-                />
+                            ref: input => { this.searchInput = input; }
+                        }}
+
+                    />
+                }
+                footer={
+                    <div>
+                        <Button
+                            onClick={this.handleAddWeather}
+                            className="button margin-right-1"
+                            title="Add"
+                        />
+                        <Button
+                            onClick={this.handleClose}
+                            className="button"
+                            title="Cancel"
+                        />
+                    </div>
+                }
+            />
         )
     }
 }

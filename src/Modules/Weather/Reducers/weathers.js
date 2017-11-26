@@ -13,8 +13,9 @@ export const weathers = (state = initialState, action) => {
                 error: []
             }
         case 'ADD_WEATHER_SUCCESS':
+            console.log('add',action.payload)
             return {
-                list: [...state.list, action.payload],
+                list: [action.payload, ...state.list],
                 status: 'SUCCESS',
                 error: []
             }
@@ -26,7 +27,7 @@ export const weathers = (state = initialState, action) => {
             }
         case 'DELETE_WEATHER':
             return {
-                list: state.list.filter((item) => item.city !== action.payload),
+                list: state.list.filter((board) => board.area !== action.payload),
                 status: 'SUCCESS',
                 error: action.payload,
             }

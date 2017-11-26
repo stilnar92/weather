@@ -11,6 +11,7 @@ export class InterfaceActions {
             }
         )
     }
+
     clear() {
         this.dispatch(
             {
@@ -18,6 +19,7 @@ export class InterfaceActions {
             }
         )
     }
+
     showModal(type) {
         this.dispatch(
             {
@@ -27,6 +29,7 @@ export class InterfaceActions {
             }
         )
     }
+
     closeModal(type) {
         this.dispatch(
             {

@@ -20,7 +20,7 @@ class WeatherPage extends Component {
     handleRefreshWeather = () => {
         const {weathers, actions} = this.props;
         let refreshList = weathers.map((weather) => {
-            return () => actions.addWeather(weather.city.name)
+            return () => actions.addWeather(weather.area)
         });
         actions.deleteAll();
         Promise.all(refreshList.map((refresh) => refresh()));
@@ -48,11 +48,13 @@ class WeatherPage extends Component {
     }
 }
 
+
+
 const mapStateToProps = (state) => {
     let {weathers} = state;
     return {
-        weathers:  weathers.list,
-        isLoading: weathers.status === 'RUNNING',
+        weathers: weathers.list,
+        isLoading: weathers.status === 'RUNNING' || weathers.status === 'IDLE',
     }
 }
 

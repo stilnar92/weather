@@ -4,7 +4,7 @@ import rootReducer from './Reducers'
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import  {saveStateToStorage, loadStateFromStorage} from './Core/Utils';
-
+import {openWeatherDataNormalize} from './Modules/Weather/middleware';
 
 export  const configureStore = () => {
     const initialStore = loadStateFromStorage();
@@ -13,7 +13,7 @@ export  const configureStore = () => {
         rootReducer,
         initialStore,
         composeWithDevTools(
-            applyMiddleware(thunk)
+            applyMiddleware(thunk, openWeatherDataNormalize)
         )
     );
 

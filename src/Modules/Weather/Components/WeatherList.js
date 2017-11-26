@@ -12,7 +12,7 @@ export default class WeatherList extends Component {
                         (
                             <Board
                                 key={`board-${index}`}
-                                item={weather}
+                                {...weather}
                                 deleteWeather={deleteWeather}
                             />
                         )

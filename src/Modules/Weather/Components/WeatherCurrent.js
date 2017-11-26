@@ -1,49 +1,31 @@
-import React, {Component} from 'react';
-import {timeStampConvertTime, getIconClass} from  '../Utils';
+import React from 'react';
 import {Icon} from  '../../../Core/Components/Icon';
 
-export default class WeatherCurrent extends Component {
-
-    render() {
-        const {
-            area,
-            forecast: {
-                weather: [
-                    {
-                        description,
-                        icon
-                    }
-                ],
-                dt: currentDate,
-                main: {
-                    temp,
-                    humidity
-                },
-                wind
-
-            }
-        } = this.props;
-        const weatherType = getIconClass(icon);
-        return (
-            <div>
-                <div className="location">{area}</div>
-                <div className="date">{timeStampConvertTime(currentDate)}</div>
-                <div className="description">{description}</div>
-                <div className="current">
-                    <div className="visual">
-                        <Icon type={weatherType}/>
-                        <div className="temperature">
-                            <span className="value">{temp}</span><span className="scale">°C</span>
-                        </div>
+export const WeatherCurrent = ({
+       iconClass,
+       description,
+       currentDate,
+       temp,
+       humidity,
+       windSpeed,
+       windDegree,
+    }) => (
+        <div>
+            <div className="date">{currentDate}</div>
+            <div className="description">{description}</div>
+            <div className="current">
+                <div className="visual">
+                    <Icon type={iconClass}/>
+                    <div className="temperature">
+                        <span className="value">{temp}</span><span className="scale">°C</span>
                     </div>
-                    <div className="description">
-                        <div className="humidity">{`${humidity}%`}</div>
-                        <div className="wind">
-                            <span className="value">{`${wind.speed} mph ${parseInt(wind.deg, 10)}°`}</span>
-                        </div>
+                </div>
+                <div className="description">
+                    <div className="humidity">{`${humidity}%`}</div>
+                    <div className="wind">
+                        <span className="value">{`${windSpeed} mph ${windDegree}°`}</span>
                     </div>
                 </div>
             </div>
-        )
-    }
-}
+        </div>
+)
