@@ -6,7 +6,9 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import  {saveStateToStorage, loadStateFromStorage} from './Core/Utils';
 import {openWeatherDataNormalize} from './Modules/Weather/middleware';
 
+
 export  const configureStore = () => {
+
     const initialStore = loadStateFromStorage();
 
     let store = createStore(

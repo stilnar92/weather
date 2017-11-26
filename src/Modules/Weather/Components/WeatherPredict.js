@@ -1,7 +1,7 @@
 import React from 'react';
 import {Icon} from  '../../../Core/Components/Icon';
 
-export const WeatherFuture = ({weekDay, iconClass, tempMax, tempMin}) => {
+export const WeatherPredict = ({weekDay, iconClass, tempMax, tempMin}) => {
     return (
         <div className="oneday">
             <div className="date">{weekDay}</div>

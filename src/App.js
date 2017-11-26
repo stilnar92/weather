@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Styles/App.css';
 import UserGeoLocation from "./Modules/GeoLocation/Components/UserGeoLocation";
 import WeatherPage from "./Modules/Weather/Pages/WeatherPage";
-import AddWeatherAreaModal from "./Modules/Weather/Components/Modals/AddWeatherAreaModal";
+import AddWeatherModal from "./Modules/Weather/Components/Modals/AddWeatherModal";
 import Errors from "./Core/Components/Errors";
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
                     <WeatherPage/>
                 </UserGeoLocation>
                 <Errors/>
-                <AddWeatherAreaModal/>
+                <AddWeatherModal/>
             </div>
         );
     }

@@ -8,7 +8,7 @@ import {WeathersPageActions} from '../../Actions/WeathersPageActions';
 import {WeathersPageService} from '../../Service';
 import {getCityFromArea} from '../../../../Core/Utils';
 
-export class AddWeatherAreaModal extends PureComponent {
+export class AddWeatherModal extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -24,7 +24,7 @@ export class AddWeatherAreaModal extends PureComponent {
     handleChoiceArea = (area) => {
         this.setState({area})
     }
-    clearAreaInput = () => {
+    handleClearAreaInput = () => {
         this.setState({area: ''})
     }
 
@@ -36,9 +36,9 @@ export class AddWeatherAreaModal extends PureComponent {
         const {weatherPageActions, interfaceActions} = this.props;
         interfaceActions.closeModal(MODAL_TYPES.ADD_WEATHER);
         getCityFromArea(this.state.area).then((city) => weatherPageActions.addWeather(city)).then(() => {
-            this.clearAreaInput();
+            this.handleClearAreaInput();
         }).catch((error) => {
-            this.clearAreaInput();
+            this.handleClearAreaInput();
             interfaceActions.notify({type: 'SHOW_ERROR', message: error.message});
         });
 
@@ -91,4 +91,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddWeatherAreaModal)
+export default connect(mapStateToProps, mapDispatchToProps)(AddWeatherModal)

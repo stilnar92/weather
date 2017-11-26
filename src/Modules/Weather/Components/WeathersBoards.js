@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Board} from './Board';
 
-export default class WeatherList extends Component {
+export default class WeathersBoards extends Component {
 
     render() {
         const {weathers, deleteWeather} = this.props;

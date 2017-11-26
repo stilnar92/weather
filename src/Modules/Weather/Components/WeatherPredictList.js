@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {WeatherFuture} from './WeatherFuture';
+import React from 'react';
+import {WeatherPredict} from './WeatherPredict';
 
 export const WeatherPredictList = ({predicts}) => {
     return (
         <div className="future">
             {
                 predicts.map((weather, index) =>
-                    <WeatherFuture
+                    <WeatherPredict
                         {...weather}
                         key={`future_${index}`}
                     />)

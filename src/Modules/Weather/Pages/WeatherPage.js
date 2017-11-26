@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {WeatherHeader as Header} from '../Components/WeatherHeader';
-import WeatherList from '../Components/WeatherList';
+import WeathersBoards from '../Components/WeathersBoards';
 import {WeathersPageActions} from '../Actions/WeathersPageActions';
 import {WeathersPageService} from '../Service';
 import {InterfaceActions} from '../../../Core/Actions/InterfaceActions';
@@ -9,13 +9,6 @@ import {Loader} from '../../../Core/Components/Loader';
 import {MODAL_TYPES} from '../../../Core/Constants'
 
 class WeatherPage extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            showModal: false
-        }
-    }
 
     handleRefreshWeather = () => {
         const {weathers, actions} = this.props;
@@ -42,7 +35,7 @@ class WeatherPage extends Component {
                     refreshWeather={this.handleRefreshWeather}
                     addCity={this.handleShowAddCityModal}
                 />
-                {isLoading ? <Loader/> : <WeatherList weathers={weathers} deleteWeather={this.handleDeleteWeather}/>}
+                {isLoading ? <Loader/> : <WeathersBoards weathers={weathers} deleteWeather={this.handleDeleteWeather}/>}
             </div>
         );
     }

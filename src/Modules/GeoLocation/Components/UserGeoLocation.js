@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {findUserArea} from '../../../Core/Utils'
 import {MODAL_TYPES} from '../../../Core/Constants'
-import {WeathersPageActions, LocationActions} from '../../Weather/Actions/index';
+import {WeathersPageActions} from '../../Weather/Actions/WeathersPageActions';
 import {InterfaceActions} from '../../../Core/Actions/InterfaceActions';
 import {WeathersPageService} from '../../Weather/Service';
-import {LocationInfoModal} from '../../Weather/Components/Modals/index';
+import {LocationInfoModal} from './LocationInfoModal';
+import {LocationActions} from '../Actions/LocationActions';
 import {Loader} from '../../../Core/Components/Loader';
 
 class UserGeoLocation extends Component {
@@ -13,7 +14,6 @@ class UserGeoLocation extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLocationFind: false,
             showModal: true
         }
     }
@@ -22,7 +22,7 @@ class UserGeoLocation extends Component {
         const {saveUserLocation} = this.props.locationActions;
         if (this.props.isUserNotConfirmLocation) {
             findUserArea().then((area) => {
-                saveUserLocation(area).then(() => (this.setState({isLocationFind: true})))
+                saveUserLocation(area)
             })
         }
     }
@@ -31,7 +31,6 @@ class UserGeoLocation extends Component {
         const {userLocation, weatherPageActions: {addWeather}, locationActions} = this.props;
         locationActions.userConfirmLocation();
         addWeather(userLocation);
-        
         this.setState({showModal: false})
 
     }
